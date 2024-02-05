@@ -2,25 +2,33 @@
     require "./DB/connect.php";
     require "./DB/users.php";
 
-    if(isset($_COOKIE['PHPSESSID'])){
-        session_start();
+    
+    session_start();
 
-        if ($_SERVER['REQUEST_METHOD']=='POST') {
-            $userName = isset($_POST['user']) ? filter_input(INPUT_POST,'user',FILTER_SANITIZE_EMAIL)  : null;
-            $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass'])                       : null;
-            
+    if(isset($_COOKIE['user'])){ //! Revisar que funciona y el usuario lo redirige al mainpage
+        header("Location: ./pagina/mainpage.php");
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD']=='POST') {
+        $userName = isset($_POST['user']) ? filter_input(INPUT_POST,'user',FILTER_SANITIZE_EMAIL)  : null;
+        $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass'])                       : null;
+        
+        if ( pass ) { /* Introduce una condicion donde compruebe si se ha introducido usuario y contraseña */
             if(validateUser($userName, $password)){
                 $_SESSION['user'] = $userName;
                 header("Location: ./pagina/mainpage.php");
                 exit();
+            } else {
+                pass; // Rellena con tu código, esto si no se ha validado correctamente.
             } 
 
-            $error = "No se ha introducido el usuario o contraseña erroneamente.";
-            
-
-        } else {
-            $error = "No se ha enviado por el metodo post";
+        }else { 
+            # code... // Rellena con tu código, esto si no se ha enviado ni el usuario ni la contraseña.
         }
+
+    } else {
+        $error = "No se ha enviado por el metodo post";
     }
 ?>
 
@@ -34,9 +42,14 @@
 <body>
     <main>
         <h1>EduHacks</h1>
+        //! Muestra los errores si no se ha enviado correctamente. Este lo haremos juntos
+        //!
+        //!          YOU CODE
+        //!
+        //! =============================================================================
         <form method="post">
             <label for="user">EMAIL</label>
-            <input type="email" name="user" required>
+            <input type="email" name="user" value=<?=$userName?> required>
             <label for="pass">CONTRASENYA</label>
             <input type="password" name="pass" required>
             <button class="button" type="submit"><span>Login</span></button>
