@@ -25,7 +25,7 @@
                 exit();
             } 
 
-        }else {
+        } else {
             // Rellena con tu código, esto si no se ha enviado ni el usuario ni la contraseña.
             header("Location: ./login.php?error=Por favor, introduce un usuario y contraseña");
             exit();
