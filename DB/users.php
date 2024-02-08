@@ -1,10 +1,12 @@
 <?php
 
-    require "./connect.php";
+    require "./DB/connect.php";
 
     function validateUser($user, $pass){
         $login = false;
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user AND `passHash` = :pass"; //! Mirar más adelante
+
+        //! Hay que hashear la contraseña y compararla con el hash que hay en la base de datos.
 
         try {
             $conn = '';

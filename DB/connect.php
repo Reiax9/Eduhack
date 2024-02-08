@@ -1,5 +1,5 @@
 <?php
-    $cadena_connexio = 'mysql:dbname=eduhack;host=localhost:3306';
+    $cadena_connexio = 'mysql:dbname=eduhacks;host=localhost:3316';
     $usuari = 'root';
     $passwd = '';
     try{
