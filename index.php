@@ -14,21 +14,27 @@
         $userName = isset($_POST['user']) ? filter_input(INPUT_POST,'user',FILTER_SANITIZE_EMAIL)  : null;
         $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass'])                       : null;
         
-        if ( pass ) { /* Introduce una condicion donde compruebe si se ha introducido usuario y contraseña */
+        if ($userName && $password) { /* Introduce una condicion donde compruebe si se ha introducido usuario y contraseña */
             if(validateUser($userName, $password)){
                 $_SESSION['user'] = $userName;
                 header("Location: ./pagina/mainpage.php");
                 exit();
             } else {
-                pass; // Rellena con tu código, esto si no se ha validado correctamente.
+                // Rellena con tu código, esto si no se ha validado correctamente.
+                header("Location: ./login.php?error=Usuario o contraseña incorrectos"); 
+                exit();
             } 
 
-        }else { 
-            # code... // Rellena con tu código, esto si no se ha enviado ni el usuario ni la contraseña.
+        }else {
+            // Rellena con tu código, esto si no se ha enviado ni el usuario ni la contraseña.
+            header("Location: ./login.php?error=Por favor, introduce un usuario y contraseña");
+            exit();
         }
 
     } else {
-        $error = "No se ha enviado por el metodo post";
+        $error = "No se ha enviado por el metodo POST";
+        header("Location: ./login.php?error=$error");
+        exit();
     }
 ?>
 
