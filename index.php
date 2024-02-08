@@ -21,19 +21,18 @@
                 exit();
             } else {
                 // Rellena con tu código, esto si no se ha validado correctamente.
-                header("Location: ./login.php?error=Usuario o contraseña incorrectos"); 
+                $error="Usuario o contraseña incorrectos"; 
                 exit();
             } 
 
         } else {
             // Rellena con tu código, esto si no se ha enviado ni el usuario ni la contraseña.
-            header("Location: ./login.php?error=Por favor, introduce un usuario y contraseña");
+            $error="Por favor, introduce un usuario y contraseña";
             exit();
         }
 
     } else {
-        $error = "No se ha enviado por el metodo POST";
-        header("Location: ./login.php?error=$error");
+        echo "<p>Error: $error</p>";
         exit();
     }
 ?>
