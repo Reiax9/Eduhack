@@ -1,32 +1,29 @@
 <?php
-    require "./DB/connect.php";
-    require "./DB/users.php";
+    require "./lib/users.php";
 
     
     session_start();
 
     if(isset($_COOKIE['user'])){ //! Revisar que funciona y el usuario lo redirige al mainpage
-        header("Location: ./web/mainPage.php");
+        header("Location: ./php/home.php");
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
+
         $userName = isset($_POST['user']) ? filter_input(INPUT_POST,'user',FILTER_SANITIZE_EMAIL)  : null;
         $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass'])                       : null;
-        
-        if ($userName && $password) { /* Introduce una condicion donde compruebe si se ha introducido usuario y contraseña */
-            if(validateUser($userName, $password)){
+
+        if ($userName && $password) {
+            if(validateUser($userName,$password)){
+
                 $_SESSION['user'] = $userName;
-                header("Location: ./pagina/mainpage.php");
+                header("Location: ./php/home.php");
                 exit();
-            } else {
-                $error="Usuario o contraseña incorrectos"; 
-            } 
 
-        } else {
-            $error="Por favor, introduce un usuario y contraseña";
-        }
+            } else { $error="Usuario o contraseña incorrectos"; } 
 
+        } else { $error="Por favor, introduce un usuario y contraseña"; }
     } 
 ?>
 
@@ -43,7 +40,7 @@
         <h1>EduHacks</h1>
         <form method="post">
             <label for="user">EMAIL</label>
-            <input type="email" name="user" required>
+            <input type="email" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>
             <input type="password" name="pass" required>
             <button class="button" type="submit"><span>Login</span></button>
