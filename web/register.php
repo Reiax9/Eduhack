@@ -1,24 +1,28 @@
 <?php 
 
-    require "./lib/users.php";
+    require "../lib/users.php";
 
     session_start();
 
-    if ($_SERVER['REQUEST_METHODE']=='POST') {
+    if ($_SERVER['REQUEST_METHOD']=='POST') {
         
         $email      = isset($_POST['email'])             ? filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) : null;
-        $name       = isset($_POST['name'])              ? htmlspecialchars($_POST['name']) : null;
+        $name       = isset($_POST['username'])          ? htmlspecialchars($_POST['username']) : null;
         $firstName  = isset($_POST['firstName'])         ? htmlspecialchars($_POST['firstName']) : null;
         $lastName   = isset($_POST['lastName'])          ? htmlspecialchars($_POST['lastName']) : null;
         $pass       = isset($_POST['password'])          ? htmlspecialchars($_POST['password']) : null;
         $veriPass   = isset($_POST['confirmPassword'])   ? htmlspecialchars($_POST['confirmPassword']) : null;
 
         if ($email && $name && $pass && $veriPass) {
-            
+            if($pass===$veriPass) {
+                registerUser($email, $name, $firstName, $lastName, $pass);
+                header("Location: ../index.php");
+                exit(0);
+            } else { 
+                $error = "La contraseña no coinciden"; 
+            }
         }
-
     }
-
 ?>
 
 <!DOCTYPE html>

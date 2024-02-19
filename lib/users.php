@@ -1,10 +1,10 @@
 <?php
 
-    require "./lib/connect.php";
+    require "connect.php";
 
     function validateUser($user, $password){
         $login = null;
-        $sql = "SELECT `passHash` FROM users WHERE `mail` = :user OR `username` = :user"; //! Mirar más adelante
+        $sql = "SELECT `passHash` FROM users WHERE `mail` = :user OR `username` = :user"; 
 
         try {
             $conn = null;
@@ -23,15 +23,18 @@
     function registerUser($email, $name, $firstName, $lastName, $pass){
         $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, `creationDate`, `removeDate`, `lastSignIn`, `active`)
                       VALUES (:email, :username, :pass, :firstName, :lastName, :creationDate, NULL, NULL, 1)";
-        $fechaActual = date(j-m-y);
+        $currentDate = date("j-m-y H:i:s"); // ! Formato año-mes-dia
+        $passHash = password_hash($pass,PASSWORD_DEFAULT);
 
         try {
             $conn = null;
             $conn = getDBConnection();
 
             $db = $conn->prepare($insertSql);
-            $db->execute([':email' => $email, ]);
-        } catch (PDOStatment $e) {
+            $db->execute([':email' => $email, ':username' => $name, ':pass' => $passHash,
+                          ':firstName' => $firstName, ':lastName' => $lastName, ':creationDate' => $currentDate]);
+
+        } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
         }
 

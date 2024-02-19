@@ -1,11 +1,10 @@
 <?php
     require "./lib/users.php";
 
-    
     session_start();
 
-    if(isset($_COOKIE['user'])){ //! Revisar que funciona y el usuario lo redirige al mainpage
-        header("Location: ./php/home.php");
+    if(isset($_COOKIE['PHPSESSID'])){
+        header("Location: ./web/home.php");
         exit();
     }
 
@@ -18,8 +17,8 @@
             if(validateUser($userName,$password)){
 
                 $_SESSION['user'] = $userName;
-                header("Location: ./php/home.php");
-                exit();
+                header("Location: ./web/home.php");
+                exit(0);
 
             } else { $error="Usuario o contraseña incorrectos"; } 
 
@@ -46,10 +45,9 @@
             <input type="text" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>
             <input type="password" name="pass" required>
+            <a href="./web/register.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
-            <?php if (isset($error)) {
-                echo "<p style='color:red;'>" . $error . "</p>";
-            }?>
+            <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
         </form>
     </main>
 </body>
