@@ -11,8 +11,8 @@
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
 
-        $userName = isset($_POST['user']) ? filter_input(INPUT_POST,'user',FILTER_SANITIZE_EMAIL)  : null;
-        $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass'])                       : null;
+        $userName = isset($_POST['user']) ? htmlspecialchars($_POST['user']) : null;
+        $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass']) : null;
 
         if ($userName && $password) {
             if(validateUser($userName,$password)){
@@ -40,9 +40,10 @@
         <form method="post">
             <h1>EduHacks</h1>    
             <label for="user">EMAIL</label>
-            <input type="email" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
+            <input type="text" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>
             <input type="password" name="pass" required>
+            <a href="./web/home.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
             <?php if (isset($error)) {
                 echo "<p style='color:red;'>" . $error . "</p>";
