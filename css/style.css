@@ -8,7 +8,9 @@
 /* Estilo para el cuerpo de la página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('../img/backGround\ \(2\).jpg');
+    background-size: cover; /* Cubrir todo el área */
+    background-position: center; /* Centrar la imagen */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,11 +20,14 @@ body {
 /* Estilo para el contenedor principal */
 main {
     max-width: 400px;
+    width: 100%; /* Ajustar el ancho al 100% para ocupar todo el ancho disponible */
     background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
+    padding: 50px; /* Ajustar el padding según sea necesario */
+    margin: 100px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 
 /* Estilo para el encabezado */
 h1 {

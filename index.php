@@ -37,8 +37,8 @@
 </head>
 <body>
     <main>
-        <h1>EduHacks</h1>
         <form method="post">
+            <h1>EduHacks</h1>    
             <label for="user">EMAIL</label>
             <input type="email" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>
