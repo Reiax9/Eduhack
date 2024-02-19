@@ -38,12 +38,15 @@
 <body>
     <main>
         <form method="post">
-            <h1>EduHacks</h1>    
+            <div id="logo">
+                <img  src="../Eduhack/img/logo.jpg" alt="logo">
+            </div>
+            
             <label for="user">EMAIL</label>
             <input type="email" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>
             <input type="password" name="pass" required>
-            <button class="button" type="submit"><span>Login</span></button>
+            <button class="button" type="submit"><span>LOGIN</span></button>
             <?php if (isset($error)) {
                 echo "<p style='color:red;'>" . $error . "</p>";
             }?>

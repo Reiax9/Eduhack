@@ -42,6 +42,19 @@ form {
     flex-direction: column;
 }
 
+#logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo img{
+    height: 10em;
+    width: 10em;
+    margin-bottom: 2em;
+    border-radius: 5em;
+}
+
 /* Estilo para las etiquetas de los campos de entrada */
 label {
     margin-bottom: 5px;
@@ -60,7 +73,7 @@ input[type="password"] {
 /* Estilo para el botón de enviar */
 button {
     padding: 10px;
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 3px;
