@@ -16,13 +16,15 @@
         if ($userName && $password) {
             if(validateUser($userName,$password)){
 
-                $_SESSION['user'] = $userName;
+                $_SESSION['user'] = getDataUsers($userName);
                 header("Location: ./web/home.php");
                 exit(0);
+            } 
 
-            } else { $error="Usuario o contraseña incorrectos"; } 
+        }
 
-        } else { $error="Por favor, introduce un usuario y contraseña"; }
+        // Si falla al logear, no indicar mucha información
+        $error="Por favor, introduce un usuario y contraseña correctamente"; 
     } 
 ?>
 
@@ -40,7 +42,6 @@
             <div id="logo">
                 <img  src="../Eduhack/img/logo.jpg" alt="logo">
             </div>
-            
             <label for="user">EMAIL</label>
             <input type="text" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
             <label for="pass">CONTRASENYA</label>

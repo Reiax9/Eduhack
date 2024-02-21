@@ -62,7 +62,7 @@ label {
 }
 
 /* Estilo para los campos de entrada */
-input[type="email"],
+input[type="text"],
 input[type="password"] {
     padding: 10px;
     margin-bottom: 15px;

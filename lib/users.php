@@ -2,10 +2,13 @@
 
     require "connect.php";
 
+    
     function validateUser($user, $password){
         $login = null;
-        $sql = "SELECT `passHash` FROM users WHERE `mail` = :user OR `username` = :user"; 
-
+        $sql = "SELECT `passHash` FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
+        
+        $hash = password_hash($pass);
+        
         try {
             $conn = null;
             $conn = getDBconnection();
@@ -37,5 +40,20 @@
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
         }
+    }    
+    
+    function getDataUsers($user){
+        $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
 
-    }        
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':user' => $user]);
+            return $db->fetch(); //! Envio todos los datos del usuario
+
+        } catch (PDOStatement $e) {
+            echo "ERROR: ".$e;
+        }
+    }
