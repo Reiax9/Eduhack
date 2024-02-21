@@ -2,13 +2,10 @@
 
     require "connect.php";
 
-    
     function validateUser($user, $password){
         $login = null;
         $sql = "SELECT `passHash` FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
-        
-        $hash = password_hash($pass);
-        
+                
         try {
             $conn = null;
             $conn = getDBconnection();
@@ -24,7 +21,8 @@
     }
 
     function registerUser($email, $name, $firstName, $lastName, $pass){
-        $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, `creationDate`, `removeDate`, `lastSignIn`, `active`)
+        $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, 
+                                  `creationDate`, `removeDate`, `lastSignIn`, `active`)
                       VALUES (:email, :username, :pass, :firstName, :lastName, :creationDate, NULL, NULL, 1)";
         $currentDate = date("j-m-y H:i:s"); // ! Formato año-mes-dia
         $passHash = password_hash($pass,PASSWORD_DEFAULT);
@@ -54,6 +52,21 @@
             return $db->fetch(); //! Envio todos los datos del usuario
 
         } catch (PDOStatement $e) {
+            echo "ERROR: ".$e;
+        }
+    }
+
+    function updateTime($user){
+        $sql = "UPDATE users SET lastSignIn = :lastTime WHERE `mail` = :user OR `username` = :user";
+        $dataTime = date("j-m-y H:i:s");
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([ ':lastTime' => $dataTime,':user' => $user]);
+        } catch (PDOStatement $th) {
             echo "ERROR: ".$e;
         }
     }

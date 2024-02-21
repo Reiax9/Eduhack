@@ -3,10 +3,10 @@
 
     session_start();
 
-    if(isset($_COOKIE['PHPSESSID'])){
-        header("Location: ./web/home.php");
-        exit();
-    }
+    // if(isset($_COOKIE['PHPSESSID'])){
+    //     header("Location: ./web/home.php");
+    //     exit();
+    // }
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
 
@@ -17,6 +17,7 @@
             if(validateUser($userName,$password)){
 
                 $_SESSION['user'] = getDataUsers($userName);
+                setcookie($userName,"Cookie de usuario" . $userName,time() + 3600*24);
                 header("Location: ./web/home.php");
                 exit(0);
             } 
