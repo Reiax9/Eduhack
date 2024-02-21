@@ -40,7 +40,7 @@
         }
     }    
     
-    function getDataUsers($user){
+    function getAllDataUsers($user){
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
 
         try {
@@ -66,7 +66,27 @@
 
             $db = $conn->prepare($sql);
             $db->execute([ ':lastTime' => $dataTime,':user' => $user]);
-        } catch (PDOStatement $th) {
-            echo "ERROR: ".$e;
+        } catch (PDOStatement $e) {
+            echo "ERROR: ". $e;
+        }
+    }
+
+    function checkUser($user){
+        $exist = null;
+        $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user";
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':user' => $user]);
+            $row = $db->fetch();
+
+            $exist = $row && $row->rowCount() ? true : false;
+        } catch (PDOStatement $e) {
+            echo "ERROR: ". $e;
+        } finally {
+            return $exist;
         }
     }

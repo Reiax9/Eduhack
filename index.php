@@ -16,8 +16,8 @@
         if ($userName && $password) {
             if(validateUser($userName,$password)){
 
-                $_SESSION['user'] = getDataUsers($userName);
-                setcookie($userName,"Cookie de usuario" . $userName,time() + 3600*24);
+                $_SESSION['user'] = getAllDataUsers($userName);
+                setcookie($userName,"Cookie de usuario " . $userName,time() + 3600*24);
                 header("Location: ./web/home.php");
                 exit(0);
             } 
@@ -50,6 +50,7 @@
             <a href="./web/register.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
+            <?php if (isset($_SERVER['register'])) { echo "<p style='color:green;'>Login successful</p>"; }?> // Comprobar que funcione
         </form>
     </main>
 </body>

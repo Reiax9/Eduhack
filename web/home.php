@@ -6,11 +6,14 @@
 
     if (!isset($_SESSION['user'])) {
         header("Location: ../index.php");
-        exit();
+        exit(0);
     }
 
     $dataUser = $_SESSION['user'];
-    updateTime($dataUser['username'])
+    updateTime($dataUser['username']);
+
+    echo $_COOKIE[$dataUser['username']];
+
 ?>
 <!DOCTYPE html>
 <html>

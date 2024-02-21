@@ -14,12 +14,19 @@
         $veriPass   = isset($_POST['confirmPassword'])   ? htmlspecialchars($_POST['confirmPassword']) : null;
 
         if ($email && $name && $pass && $veriPass) {
-            if($pass===$veriPass) {
+            $error = "";
+            $passwordMatch=$userMatch=$emailMatch=false;
+
+            // Arreglar bugs
+            checkUser($email) ? $emailMatch=true    : $error = "El correo {$email} ya esta en uso.";
+            checkUser($name)  ? $userMatch=true     : $error = "El usuario {$name} ya esta en uso.";
+            $pass===$veriPass ? $passwordMatch=true : $error = "La contraseña no coinciden.";
+
+            if ($passwordMatch && $emailMatch && $userMatch) {
                 registerUser($email, $name, $firstName, $lastName, $pass);
+                $_SERVER['register']=true;
                 header("Location: ../index.php");
                 exit(0);
-            } else { 
-                $error = "La contraseña no coinciden"; 
             }
         }
     }
@@ -40,6 +47,7 @@
         <input type="password" name="password" placeholder="Contrasenya" required><br>
         <input type="password" name="confirmPassword" placeholder="Confirma la contrasenya" required><br>
         <input type="submit" value="Registra't">
+        <?= isset($error) ? "<p style='color:red;'>".$error."</p>": '';?>
     </form>
 </body>
 </html>
