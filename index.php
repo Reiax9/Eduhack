@@ -2,11 +2,9 @@
 
     require "./lib/users.php";
 
-    
-    if(isset($_COOKIE['PHPSESSID'])){
-        header("Location: ./web/home.php");
-        exit(0);
-    }else if ($_SERVER['REQUEST_METHOD']=='POST') {
+    session_start();
+
+    if ($_SERVER['REQUEST_METHOD']=='POST') {
         
         $userName = isset($_POST['user']) ? htmlspecialchars($_POST['user']) : null;
         $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass']) : null;
@@ -14,18 +12,23 @@
         if ($userName && $password) {
             if(validateUser($userName,$password)){
                 session_start();
-                
                 $_SESSION['user'] = getAllDataUsers($userName);
-                setcookie($userName,"Cookie de usuario " . $userName,time() + 3600*24);
+                setcookie("loginSuccess","Cookie de usuario " . $_SESSION['user']['username'],time() + 3600*24);
                 header("Location: ./web/home.php");
                 exit(0);
             } 
-
         }
-
         // Si falla al logear, no indicar mucha información
         $error="Por favor, introduce un usuario y contraseña correctamente"; 
-    } 
+
+    } else if (isset($_SESSION['register_success']) && $_SESSION['register_success'] === true) {
+        $successRegister = "Register successful";
+        unset($_SESSION['register_success']);
+    } else if(isset($_COOKIE['loginSuccess'])){
+        header("Location: ./web/home.php");
+        exit(0);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +53,7 @@
             <button class="button" type="submit"><span>Login</span></button>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
             <!-- Comprobar que funcione -->
-            <?php if (isset($_SERVER['register'])) { echo "<p style='color:green;'>Login successful</p>"; }?> 
+            <?php if (isset($successRegister)) { echo "<p style='color:green;'>" . $successRegister . "</p>"; }?> 
         </form>
     </main>
 </body>

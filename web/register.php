@@ -2,8 +2,6 @@
 
     require "../lib/users.php";
 
-    session_start();
-
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         
         $email     = isset($_POST['email'])           ? filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) : null;
@@ -25,7 +23,8 @@
 
             if ($passwordMatch && $emailMatch && $userMatch) {
                 registerUser($email, $name, $firstName, $lastName, $pass);
-                $_SERVER['register']=true;
+                session_start();
+                $_SESSION['register_success'] = true;
                 header("Location: ../index.php");
                 exit(0);
             }
