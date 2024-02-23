@@ -6,20 +6,21 @@
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         
-        $email      = isset($_POST['email'])             ? filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) : null;
-        $name       = isset($_POST['username'])          ? htmlspecialchars($_POST['username']) : null;
-        $firstName  = isset($_POST['firstName'])         ? htmlspecialchars($_POST['firstName']) : null;
-        $lastName   = isset($_POST['lastName'])          ? htmlspecialchars($_POST['lastName']) : null;
-        $pass       = isset($_POST['password'])          ? htmlspecialchars($_POST['password']) : null;
-        $veriPass   = isset($_POST['confirmPassword'])   ? htmlspecialchars($_POST['confirmPassword']) : null;
+        $email     = isset($_POST['email'])           ? filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) : null;
+        $name      = isset($_POST['username'])        ? htmlspecialchars($_POST['username']) : null;
+        $firstName = isset($_POST['firstName'])       ? htmlspecialchars($_POST['firstName']) : null;
+        $lastName  = isset($_POST['lastName'])        ? htmlspecialchars($_POST['lastName']) : null;
+        $pass      = isset($_POST['password'])        ? htmlspecialchars($_POST['password']) : null;
+        $veriPass  = isset($_POST['confirmPassword']) ? htmlspecialchars($_POST['confirmPassword']) : null;
 
         if ($email && $name && $pass && $veriPass) {
             $error = "";
             $passwordMatch=$userMatch=$emailMatch=false;
 
-            // Arreglar bugs
-            checkUser($email) ? $emailMatch=true    : $error = "El correo {$email} ya esta en uso.";
-            checkUser($name)  ? $userMatch=true     : $error = "El usuario {$name} ya esta en uso.";
+            //! Si no existe, me da un false y permite crear el usuario
+            checkUser($email) ? $error = "El correo {$email} ya esta en uso." : $emailMatch=true;
+            checkUser($name)  ? $error = "El usuario {$name} ya esta en uso." : $userMatch=true;
+
             $pass===$veriPass ? $passwordMatch=true : $error = "La contraseña no coinciden.";
 
             if ($passwordMatch && $emailMatch && $userMatch) {
