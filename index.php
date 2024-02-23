@@ -1,21 +1,20 @@
 <?php
+
     require "./lib/users.php";
 
-    session_start();
-
-    // if(isset($_COOKIE['PHPSESSID'])){
-    //     header("Location: ./web/home.php");
-    //     exit();
-    // }
-
-    if ($_SERVER['REQUEST_METHOD']=='POST') {
-
+    
+    if(isset($_COOKIE['PHPSESSID'])){
+        header("Location: ./web/home.php");
+        exit(0);
+    }else if ($_SERVER['REQUEST_METHOD']=='POST') {
+        
         $userName = isset($_POST['user']) ? htmlspecialchars($_POST['user']) : null;
         $password = isset($_POST['pass']) ? htmlspecialchars($_POST['pass']) : null;
-
+        
         if ($userName && $password) {
             if(validateUser($userName,$password)){
-
+                session_start();
+                
                 $_SESSION['user'] = getAllDataUsers($userName);
                 setcookie($userName,"Cookie de usuario " . $userName,time() + 3600*24);
                 header("Location: ./web/home.php");
@@ -50,7 +49,8 @@
             <a href="./web/register.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
-            <?php if (isset($_SERVER['register'])) { echo "<p style='color:green;'>Login successful</p>"; }?> // Comprobar que funcione
+            <!-- Comprobar que funcione -->
+            <?php if (isset($_SERVER['register'])) { echo "<p style='color:green;'>Login successful</p>"; }?> 
         </form>
     </main>
 </body>

@@ -83,7 +83,7 @@
             $db->execute([':user' => $user]);
             $row = $db->fetch();
 
-            $exist = $row && $row->rowCount() ? true : false;
+            $exist = $row && $row->rowCount()>0 ? true : false;
         } catch (PDOStatement $e) {
             echo "ERROR: ". $e;
         } finally {
