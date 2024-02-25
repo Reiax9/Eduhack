@@ -28,6 +28,20 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo para el enlace */
+main a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 1.5em;
+}
+
+/* Estilo para el enlace al pasar el cursor */
+main a:hover {
+    text-decoration: underline;
+}
 
 /* Estilo para el encabezado */
 h1 {
@@ -42,13 +56,13 @@ form {
     flex-direction: column;
 }
 
-#logo{
+#logo {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#logo img{
+#logo img {
     height: 10em;
     width: 10em;
     margin-bottom: 2em;
@@ -64,7 +78,7 @@ label {
 /* Estilo para los campos de entrada */
 input[type="text"],
 input[type="password"] {
-    padding: 10px;
+    padding: 14px 20px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 3px;
