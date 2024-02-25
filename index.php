@@ -53,7 +53,7 @@
             <button class="button" type="submit"><span>Login</span></button>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
             <!-- Comprobar que funcione -->
-            <?php if (isset($successRegister)) { echo "<p style='color:green;'>" . $successRegister . "</p>"; }?> 
+            <?php if (isset($successRegister)) { echo "<p id='registerSuccess'>" . $successRegister . "</p>"; }?> 
         </form>
     </main>
 </body>

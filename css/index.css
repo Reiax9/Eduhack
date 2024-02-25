@@ -105,3 +105,12 @@ button:hover {
     text-align: center;
     margin-top: 10px;
 }
+
+#registerSuccess {
+    display: flex;
+    color: green;
+    margin-top: 0.2em;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
