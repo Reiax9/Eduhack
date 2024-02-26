@@ -1,6 +1,7 @@
 <?php 
 
     require "../lib/users.php";
+    require "./lib/mail.php";
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         
@@ -25,6 +26,7 @@
                 registerUser($email, $name, $firstName, $lastName, $pass);
                 session_start();
                 $_SESSION['register_success'] = true;
+                
                 header("Location: ../index.php");
                 exit(0);
             }

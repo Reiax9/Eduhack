@@ -22,18 +22,28 @@
 
     function registerUser($email, $name, $firstName, $lastName, $pass){
         $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, 
-                                  `creationDate`, `removeDate`, `lastSignIn`, `active`)
-                      VALUES (:email, :username, :pass, :firstName, :lastName, :creationDate, NULL, NULL, 1)";
+                                  `creationDate`, `activationDate`,`activatonCode`,`activationDate`,`resetPassExpiry`,
+                                  `resetPassCode`, `removeDate`, `lastSignIn`, `active`)
+                      VALUES (  :email, :username, :pass, :firstName, :lastName, 
+                                :creationDate, NULL, :activatonCode, NULL, NULL,
+                                NULL, NULL,  NULL, 0)";
+
         $currentDate = date("j-m-y H:i:s"); // ! Formato año-mes-dia
         $passHash = password_hash($pass,PASSWORD_DEFAULT);
+        $activationCode = hash('SHA-256', rand());
 
         try {
             $conn = null;
             $conn = getDBConnection();
 
             $db = $conn->prepare($insertSql);
-            $db->execute([':email' => $email, ':username' => $name, ':pass' => $passHash,
-                          ':firstName' => $firstName, ':lastName' => $lastName, ':creationDate' => $currentDate]);
+            $db->execute([  ':email' => $email, 
+                            ':username' => $name,
+                            ':pass' => $passHash,
+                            ':firstName' => $firstName,
+                            ':lastName' => $lastName,
+                            ':creationDate' => $currentDate,
+                            ':activatonCode' => $activationCode]);
 
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
