@@ -16,8 +16,8 @@
             $passwordMatch=$userMatch=$emailMatch=false;
 
             //! Si no existe, me da un false y permite crear el usuario
-            checkUser($email) ? $error = "El correo {$email} ya esta en uso." : $emailMatch=true;
-            checkUser($name)  ? $error = "El usuario {$name} ya esta en uso." : $userMatch=true;
+            checkUser($email) ? $error = "El correo {$email} ya esta en uso." : $emailMatch = true;
+            checkUser($name)  ? $error = "El usuario {$name} ya esta en uso." : $userMatch  = true;
 
             $pass===$veriPass ? $passwordMatch=true : $error = "La contraseña no coinciden.";
 

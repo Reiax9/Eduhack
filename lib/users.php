@@ -81,10 +81,9 @@
 
             $db = $conn->prepare($sql);
             $db->execute([':user' => $user]);
-            $row = $db->fetch();
 
-            $exist = $row && $row->rowCount()>0 ? true : false;
-        } catch (PDOStatement $e) {
+            $exist = $db && $db->rowCount() > 0 ? true : false;
+        } catch (PDOException $e) {
             echo "ERROR: ". $e;
         } finally {
             return $exist;
