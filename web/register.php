@@ -26,8 +26,12 @@
                 registerUser($email, $name, $firstName, $lastName, $pass);
                 session_start();
                 $_SESSION['register_success'] = true;
-                
+
+                // Enviar email
+                $allDataUser = getAllDataUsersDes($email);
+                $html = mailActivate($allDataUser['activatonCode'],$allDataUser['mail']);
                 header("Location: ../index.php");
+                sendMail($allDataUser['mail'], "TITULO" ,$html);
                 exit(0);
             }
         }

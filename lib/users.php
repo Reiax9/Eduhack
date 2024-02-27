@@ -66,6 +66,22 @@
         }
     }
 
+    function getAllDataUsersDes($user){
+        $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user"; 
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':user' => $user]);
+            return $db->fetch(); //! Envio todos los datos del usuario
+
+        } catch (PDOStatement $e) {
+            echo "ERROR: ".$e;
+        }
+    }
+
     function updateTime($user){
         $sql = "UPDATE users SET lastSignIn = :lastTime WHERE `mail` = :user OR `username` = :user";
         $dataTime = date("j-m-y H:i:s");
