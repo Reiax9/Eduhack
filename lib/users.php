@@ -52,14 +52,18 @@
     }
     
     function activateCount($mail){
-        $sql = "UPDATE users SET active = 1 WHERE `mail` = :mail";
+        $sql            = " UPDATE users 
+                            SET active = 1, activationCode = NULL, activationDate = :currentDate
+                            WHERE `mail` = :mail"; 
+
+        $currentDate = date("j-m-y H:i:s");
 
         try {
             $conn = null;
             $conn = getDBConnection();
 
             $db = $conn->prepare($sql);
-            $db->execute([':mail' => $mail]);
+            $db->execute([':currentDate' => $currentDate, ':mail' => $mail]);
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
         }
