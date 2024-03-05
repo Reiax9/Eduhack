@@ -1,7 +1,7 @@
 <?php 
 
     require "../lib/users.php";
-    require "./lib/mail.php";
+    require "../lib/mail.php";
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         
@@ -29,7 +29,7 @@
 
                 // Enviar email
                 $allDataUser = getAllDataUsersDes($email);
-                $html = mailActivate($allDataUser['activatonCode'],$allDataUser['mail']);
+                $html = mailActivate($allDataUser['activationCode'],$allDataUser['mail']);
                 header("Location: ../index.php");
                 sendMail($allDataUser['mail'], "TITULO" ,$html);
                 exit(0);

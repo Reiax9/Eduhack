@@ -11,9 +11,6 @@
 
     $dataUser = $_SESSION['user'];
     updateTime($dataUser['username']);
-
-    echo $_COOKIE[$dataUser['username']];
-
 ?>
 <!DOCTYPE html>
 <html>

@@ -22,15 +22,15 @@
 
     function registerUser($email, $name, $firstName, $lastName, $pass){
         $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, 
-                                  `creationDate`, `activationDate`,`activatonCode`,`activationDate`,`resetPassExpiry`,
+                                  `creationDate`, `activationDate`,`activationCode`,`resetPassExpiry`,
                                   `resetPassCode`, `removeDate`, `lastSignIn`, `active`)
                       VALUES (  :email, :username, :pass, :firstName, :lastName, 
-                                :creationDate, NULL, :activatonCode, NULL, NULL,
+                                :creationDate, NULL, :activationCode, NULL,
                                 NULL, NULL,  NULL, 0)";
 
         $currentDate = date("j-m-y H:i:s"); // ! Formato año-mes-dia
         $passHash = password_hash($pass,PASSWORD_DEFAULT);
-        $activationCode = hash('SHA-256', rand());
+        $activationCode = hash('sha256', rand());
 
         try {
             $conn = null;
@@ -43,12 +43,27 @@
                             ':firstName' => $firstName,
                             ':lastName' => $lastName,
                             ':creationDate' => $currentDate,
-                            ':activatonCode' => $activationCode]);
+                            ':activationCode' => $activationCode
+                        ]);
 
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
         }
-    }    
+    }
+    
+    function activateCount($mail){
+        $sql = "UPDATE users SET active = 1 WHERE `mail` = :mail";
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':mail' => $mail]);
+        } catch (PDOStatement $e) {
+            echo "ERROR: ".$e;
+        }
+    }
     
     function getAllDataUsers($user){
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
@@ -107,6 +122,25 @@
 
             $db = $conn->prepare($sql);
             $db->execute([':user' => $user]);
+
+            $exist = $db && $db->rowCount() > 0 ? true : false;
+        } catch (PDOException $e) {
+            echo "ERROR: ". $e;
+        } finally {
+            return $exist;
+        }
+    }
+
+    function checkCode($code){
+        $exist = null;
+        $sql = "SELECT * FROM users WHERE `activationCode` = :code";
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':code' => $code]);
 
             $exist = $db && $db->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
