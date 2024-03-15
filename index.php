@@ -52,7 +52,7 @@
             <input type="password" name="pass">
             <a href="./web/register.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
-            <a href="./web/resetPassword.php">Forgot Password?</a>
+            <a href="./web/resetPasswordSend.php">Forgot Password?</a>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
             <?php if (isset($successRegister)) { echo "<p id='registerSuccess'>" . $successRegister . "</p>"; }?> 
         </form>

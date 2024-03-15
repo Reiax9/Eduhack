@@ -48,7 +48,7 @@
             ]);
 
         } catch (PDOStatement $e) {
-            echo "ERROR: ".$e;
+            echo $e->getMessage();
         }
     }
     
@@ -67,7 +67,7 @@
             $db->execute([':currentDate' => $currentDate, ':mail' => $mail]);
             header("Location: ../index.php");
         } catch (PDOStatement $e) {
-            echo "ERROR: ".$e;
+            echo $e->getMessage();
         }
     }
 
@@ -85,7 +85,7 @@
             return $db->fetch(); //! Envio todos los datos del usuario
 
         } catch (PDOStatement $e) {
-            echo "ERROR: ".$e;
+            echo $e->getMessage();
         }
     }
 
@@ -101,7 +101,7 @@
             return $db->fetch(); //! Envio todos los datos del usuario
 
         } catch (PDOStatement $e) {
-            echo "ERROR: ".$e;
+            echo $e->getMessage();
         }
     }
 
@@ -116,7 +116,7 @@
             $db = $conn->prepare($sql);
             $db->execute([ ':lastTime' => $dataTime,':user' => $user]);
         } catch (PDOStatement $e) {
-            echo "ERROR: ". $e;
+            echo $e->getMessage();
         }
     }
 
@@ -135,7 +135,7 @@
 
             $exist = $db && $db->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
-            echo "ERROR: ". $e;
+            echo $e->getMessage();
         } finally {
             return $exist;
         }
@@ -154,7 +154,7 @@
 
             $exist = $db && $db->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
-            echo "ERROR: ". $e;
+            echo $e->getMessage();
         } finally {
             return $exist;
         }
@@ -180,7 +180,7 @@
                 ':mail'        => $mail
             ]);
         } catch (PDOException $e) {
-            echo "ERROR:" . $e;
+            echo $e->getMessage();
         } finally {
             return $resetCode;
         }
@@ -188,10 +188,10 @@
 
     function checkReset($codigoReset, $mail){
         $exist = null;
-        $sql = "SELECT *
-                FROM users
-                WHERE `mail` = :mail, resetPassCode = :resetCode
-                AND TIMEDIFF(NOW(), `resetPassExpiry`) <= '00:30:00'";
+        $sql = "SELECT * 
+                FROM users 
+                WHERE `mail` = :mail 
+                AND resetPassCode = :resetCode";
 
         try {
             $conn = null;
@@ -204,26 +204,32 @@
             ]);
 
             $exist = $db && $db->rowCount() > 0 ? true : false;
+            
         } catch (PDOException $e) {
-            echo "Error: " . $e;
+            echo $e->getMessage();
+        } finally {
+            return $exist;
         }
     }
 
     function updatePassword($mail, $passHash){
         $sql = "UPDATE users 
                 SET `passHash` = :passHash
-                WHERE mail = :mail";
+                WHERE mail = :mail
+                AND TIMEDIFF(NOW(), `resetPassExpiry`) <= '00:30:00'";
 
-    try {
-        $conn = null;
-        $conn = getDBconnection();
+        try {
+            $conn = null;
+            $conn = getDBconnection();
 
-        $db = $conn->prepare($sql);
-        $db->execute([
-            ':mail'     => $mail,
-            ':passHash' => $passHash
-        ]);
-    } catch (PDOException $e) {
-        echo "Error: " . $e;
-    }
+            $db = $conn->prepare($sql);
+            $db->execute([
+                ':mail'     => $mail,
+                ':passHash' => $passHash
+            ]);
+
+            return $db->rowCount() > 0 ? true : false;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }

@@ -23,11 +23,13 @@
 <body>
     <div id="mainContent">
         <div id="panelReset">
-            <h2>Reset Password</h2>
-            <p>Introduce el Correo para resetear la contraseña</p>
-            <span>Correo: </span>
-            <input type="text" name="mail">
-            <button class="button" type="submit"><span>Send Reset Password Email</span></button>
+            <form method="post">
+                <h2>Reset Password</h2>
+                <p>Introduce el Correo para resetear la contraseña</p>
+                <span>Correo: </span>
+                <input type="text" name="mail">
+                <button class="button" type="submit"><span>Send Reset Password Email</span></button>
+            </form>
         </div>
     </div>
 </body>
