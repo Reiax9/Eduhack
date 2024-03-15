@@ -14,7 +14,7 @@
             $db->execute([':user' => $user]);
             $row = $db->fetch();
 
-            $login = $row && password_verify($password, $row['passHash']) ? true : false; //? Retorna si es correcto el login
+            $login = $row && password_verify($password, $row['passHash']) ? true : false;
         } finally {
             return $login;
         }
@@ -24,9 +24,9 @@
         $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, 
                                   `creationDate`, `activationDate`,`activationCode`,`resetPassExpiry`,
                                   `resetPassCode`, `removeDate`, `lastSignIn`, `active`)
-                      VALUES (  :email, :username, :pass, :firstName, :lastName, 
-                                :creationDate, NULL, :activationCode, NULL,
-                                NULL, NULL,  NULL, 0)";
+                        VALUES (  :email, :username, :pass, :firstName, :lastName, 
+                                  :creationDate, NULL, :activationCode, NULL,
+                                  NULL, NULL,  NULL, 0)";
 
         $currentDate = date("j-m-y H:i:s"); // ! Formato año-mes-dia
         $passHash = password_hash($pass,PASSWORD_DEFAULT);
@@ -37,14 +37,15 @@
             $conn = getDBConnection();
 
             $db = $conn->prepare($insertSql);
-            $db->execute([  ':email' => $email, 
-                            ':username' => $name,
-                            ':pass' => $passHash,
-                            ':firstName' => $firstName,
-                            ':lastName' => $lastName,
-                            ':creationDate' => $currentDate,
-                            ':activationCode' => $activationCode
-                        ]);
+            $db->execute([  
+                ':email'            => $email, 
+                ':username'         => $name,
+                ':pass'             => $passHash,
+                ':firstName'        => $firstName,
+                ':lastName'         => $lastName,
+                ':creationDate'     => $currentDate,
+                ':activationCode'   => $activationCode
+            ]);
 
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
@@ -52,9 +53,9 @@
     }
     
     function activateCount($mail){
-        $sql            = " UPDATE users 
-                            SET active = 1, activationCode = NULL, activationDate = :currentDate
-                            WHERE `mail` = :mail"; 
+        $sql = "UPDATE users 
+                SET active = 1, activationCode = NULL, activationDate = :currentDate
+                WHERE `mail` = :mail"; 
 
         $currentDate = date("j-m-y H:i:s");
 
@@ -64,10 +65,13 @@
 
             $db = $conn->prepare($sql);
             $db->execute([':currentDate' => $currentDate, ':mail' => $mail]);
+            header("Location: ../index.php");
         } catch (PDOStatement $e) {
             echo "ERROR: ".$e;
         }
     }
+
+//<> ====================================== DATA ============================================= 
     
     function getAllDataUsers($user){
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user AND active = 1"; 
@@ -116,6 +120,8 @@
         }
     }
 
+//? =================================== CHECK =============================================
+
     function checkUser($user){
         $exist = null;
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user";
@@ -152,4 +158,72 @@
         } finally {
             return $exist;
         }
+    }
+//¿ ==================================== RESETS =========================================
+
+    function resetAccountPassword($mail){
+        $sql = "UPDATE users 
+                SET resetPassCode = :resetCode, resetPassExpiry = :resetExpiry
+                WHERE `mail` = :mail";
+
+        $resetCode = hash('SHA256', rand());
+        $resetExpiry = date("j-m-y H:i:s");
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([
+                ':resetCode'   => $resetCode,
+                ':resetExpiry' => $resetExpiry,
+                ':mail'        => $mail
+            ]);
+        } catch (PDOException $e) {
+            echo "ERROR:" . $e;
+        } finally {
+            return $resetCode;
+        }
+    }
+
+    function checkReset($codigoReset, $mail){
+        $exist = null;
+        $sql = "SELECT *
+                FROM users
+                WHERE `mail` = :mail, resetPassCode = :resetCode
+                AND TIMEDIFF(NOW(), `resetPassExpiry`) <= '00:30:00'";
+
+        try {
+            $conn = null;
+            $conn = getDBconnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([
+                ':mail'      => $mail,
+                ':resetCode' => $codigoReset
+            ]);
+
+            $exist = $db && $db->rowCount() > 0 ? true : false;
+        } catch (PDOException $e) {
+            echo "Error: " . $e;
+        }
+    }
+
+    function updatePassword($mail, $passHash){
+        $sql = "UPDATE users 
+                SET `passHash` = :passHash
+                WHERE mail = :mail";
+
+    try {
+        $conn = null;
+        $conn = getDBconnection();
+
+        $db = $conn->prepare($sql);
+        $db->execute([
+            ':mail'     => $mail,
+            ':passHash' => $passHash
+        ]);
+    } catch (PDOException $e) {
+        echo "Error: " . $e;
+    }
     }

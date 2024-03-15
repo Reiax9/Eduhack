@@ -38,6 +38,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/index.css">
     <title>Login</title>
+    <script src="./popup.js"></script>
 </head>
 <body>
     <main>
@@ -46,13 +47,13 @@
                 <img  src="../Eduhack/img/logo.jpg" alt="logo">
             </div>
             <label for="user">EMAIL</label>
-            <input type="text" name="user" value="<?=isset($userName) ? $userName : '';?>" required>
+            <input type="text" name="user" value="<?=isset($userName) ? $userName : '';?>">
             <label for="pass">CONTRASENYA</label>
-            <input type="password" name="pass" required>
+            <input type="password" name="pass">
             <a href="./web/register.php">Don't have an account yet? Sign Up</a>
             <button class="button" type="submit"><span>Login</span></button>
+            <a href="./web/resetPassword.php">Forgot Password?</a>
             <?php if (isset($error)) { echo "<p style='color:red;'>" . $error . "</p>"; }?>
-            <!-- Comprobar que funcione -->
             <?php if (isset($successRegister)) { echo "<p id='registerSuccess'>" . $successRegister . "</p>"; }?> 
         </form>
     </main>
