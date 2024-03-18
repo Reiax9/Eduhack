@@ -228,7 +228,7 @@
                 ':passHash' => $passHash
             ]);
 
-            return $db->rowCount() > 0 ? true : false;
+            return $db && $db->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

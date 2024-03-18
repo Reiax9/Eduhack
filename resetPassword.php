@@ -11,6 +11,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
+        $error = '';
         $password           = isset($_POST['password'])         ? htmlspecialchars($_POST['password'])         : null;
         $passwordVerificar  = isset($_POST['verificaPassword']) ? htmlspecialchars($_POST['verificaPassword']) : null;
 
@@ -43,9 +44,9 @@
                 <h2>Reset Password</h2>
                 <p>Introdueix la contrasenya</p>
                 <span>Contrasenya: </span>
-                <input type="text" name="password">
+                <input type="password" name="password">
                 <span>Verifica contrasenya: </span>
-                <input type="text" name="verificaPassword">
+                <input type="password" name="verificaPassword">
                 <button class="button" type="submit"><span>Send Reset Password Email</span></button>
             </form>
             <?= is_null($error) ? "<p style='color: red;'>. $error .</p>" : ''; ?>
