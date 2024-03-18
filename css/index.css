@@ -12,6 +12,8 @@ body {
     background-size: cover; /* Cubrir todo el área */
     background-position: center; /* Centrar la imagen */
     display: flex;
+    background-size: cover; /* Cubrir todo el área */
+    background-position: center; /* Centrar la imagen */
     justify-content: center;
     align-items: center;
     height: 100vh;

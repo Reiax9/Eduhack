@@ -1,8 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     background-image: url('../img/backGround\ \(2\).jpg');
-    margin: 0;
-    padding: 0;
+    background-size: cover; 
+    background-position: center; 
     display: flex;
     justify-content: center;
     align-items: center;

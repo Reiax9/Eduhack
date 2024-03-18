@@ -16,6 +16,8 @@
 <html>
 <head>
     <title>Benvingut a EduHacks</title>
+    <link rel="stylesheet" href="../css/home.css">
+
 </head>
 <body>
     <h2>Benvingut, <?php echo $dataUser['userFirstName'] . " " . $dataUser['userLastName']; ?>!</h2>
