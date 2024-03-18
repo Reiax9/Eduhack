@@ -4,6 +4,7 @@
 
     $codigoReset = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : null;
     $mail        = isset($_GET['mail']) ? htmlspecialchars($_GET['mail']) : null;
+    $error       = '';
 
     if (!checkReset($codigoReset, $mail)) { 
         header("Location: ./index.php");
@@ -11,7 +12,6 @@
     }
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
-        $error = '';
         $password           = isset($_POST['password'])         ? htmlspecialchars($_POST['password'])         : null;
         $passwordVerificar  = isset($_POST['verificaPassword']) ? htmlspecialchars($_POST['verificaPassword']) : null;
 
