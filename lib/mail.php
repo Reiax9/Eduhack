@@ -19,6 +19,7 @@
 
         //Dades del correu electrònic
         $mail->SetFrom('xavier.garciam@educem.net','Xavier García');
+        $mail->AddEmbeddedImage("../img/logo.jpg", "my-attach", "../img/logo.jpg");
         $mail->addCC($userMail);
         $mail->Subject = $title;
         $mail->MsgHTML($textBody);
@@ -40,7 +41,7 @@
     function mailActivate($codeUser, $mailUser){
         $html = '';
         
-        $html .= "<img style='display:block;margin-left: auto; margin-right: auto;' src='http://localhost/proyecto/Eduhack/img/logo.jpg' alt='Logo Eduhacks'>";
+        $html .= "<img src='cid:my-attach' style='height=16px; width=16;'>";
         $html .= "<h2>Benvolguts a Eduhacks</h2>";
         $html .= "<p>Per poder iniciar sessió, has de verificar amb el següent enllaç</p>";
         $html .= "<a href='http://localhost/proyecto/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>"; // Si no funciona, concatena
@@ -50,8 +51,9 @@
 
     function resetPassword($codeUser, $mailUser){
         $html = '';
-        
-        $html .= "<img style='display:block;margin-left: auto; margin-right: auto;' src='http://localhost/proyecto/Eduhack/img/logo.jpg' alt='Logo Eduhacks'>";
+
+        $html .= "<img src='cid:my-attach'>";
+        // $html .= "<img style='display:block;margin-left: auto; margin-right: auto;' src='http://localhost/proyecto/Eduhack/img/logo.jpg' alt='Logo Eduhacks'>";
         $html .= "<h2>Reset Password</h2>";
         $html .= "<p>Per poder resetejar la contrasenya, has de verificar amb el següent enllaç</p>";
         $html .= "<a href='http://localhost/proyecto/Eduhack/resetPassword.php?code=$codeUser&mail=$mailUser'>Reset Password</a>"; // Si no funciona, concatena
