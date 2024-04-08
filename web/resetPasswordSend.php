@@ -18,7 +18,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Eduhacks</title>
+    <link rel="stylesheet" href="../css/resetPasswordSend.css">
 </head>
 <body>
     <div id="mainContent">
@@ -26,8 +27,10 @@
             <form method="post">
                 <h2>Reset Password</h2>
                 <p>Introduce el Correo para resetear la contraseña</p>
-                <span>Correo: </span>
-                <input type="text" name="mail">
+                <div class="fixInput">
+                    <span>Correo:</span>
+                    <input type="text" name="mail">
+                </div>
                 <button class="button" type="submit"><span>Send Reset Password Email</span></button>
             </form>
         </div>
