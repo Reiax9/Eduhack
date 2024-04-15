@@ -20,8 +20,9 @@
 
 </head>
 <body>
-    <h2>Benvingut, <?php echo $dataUser['userFirstName'] . " " . $dataUser['userLastName']; ?>!</h2>
+    <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
     <p>Aquesta és la pàgina d'inici.</p>
+    
     <a href="logout.php">Tanca sessió</a>
 </body>
 </html>

@@ -13,7 +13,7 @@
         $mail->CharSet    = 'UTF-8';
         $mail->SMTPAuth   = true;                                 
         $mail->Username   = 'xavier.garciam@educem.net';          
-        $mail->Password   = 'fxks nwhc eswz vwoq';                
+        $mail->Password   = 'jmor jytv iozw icpf';                
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;          
         $mail->Port       = 465;                                  
 
