@@ -21,39 +21,32 @@ CREATE TABLE IF NOT EXISTS `users`(
     PRIMARY KEY(`idUser`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `challenges_CTF`;
-CREATE TABLE IF NOT EXISTS `challenges_CTF` (
-    id_repte INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuari INT,
-    titol VARCHAR(100),
-    text_descriptiu TEXT,
-    puntuacio INT,
-    valor_flag VARCHAR(100),
-    data_publicacio DATE,
-    FOREIGN KEY (id_usuari) REFERENCES USUARI(id_usuari)
-);
+DROP TABLE IF EXISTS `challenge_CTF`;
+CREATE TABLE IF NOT EXISTS `challenge_CTF`(
+  `idChallenge` INT AUTO_INCREMENT NOT NULL,
+  `title` VARCHAR(32) NOT NULL,
+  `description` VARCHAR(128) NOT NULL,
+  `score` INT NOT NULL,
+  `flagValue` VARCHAR(265) NOT NULL,
+  `publicationDate` DATE NOT NULL,
+  `file` VARCHAR(265),
+  `category` ENUM('Steganography','Cryptography','Web Security') NOT NULL,
+  `idUsers` INT NOT NULL,
+  PRIMARY KEY (`idChallenge`),
+  FOREIGN KEY (`idUsers`) REFERENCES Users(`idUsers`)
+    UPDATE ON CASCADE
+    DELETE ON CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-DROP TABLE IF EXISTS `validation`;
-CREATE TABLE IF NOT EXISTS `validation` (
-    id_validacio INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuari INT,
-    id_repte INT,
-    data_validacio DATETIME,
-    FOREIGN KEY (id_usuari) REFERENCES USUARI(id_usuari),
-    FOREIGN KEY (id_repte) REFERENCES REPTES_CTF(id_repte)
-);
-
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nom_categoria VARCHAR(50)
-);
-
-CREATE TABLE REPTES_CTF_CATEGORIES (
-    id_repte INT,
-    id_categoria INT,
-    PRIMARY KEY (id_repte, id_categoria),
-    FOREIGN KEY (id_repte) REFERENCES REPTES_CTF(id_repte),
-    FOREIGN KEY (id_categoria) REFERENCES CATEGORIES(id_categoria)
-);
+DROP TABLE IF EXISTS `users_challenge`;
+CREATE TABLE IF NOT EXISTS `users_challenge`(
+  `idUsers` INT NOT NULL,
+  `idChallenge` INT NOT NULL,
+  PRIMARY KEY (`idUsers`, `idChallenge`),
+  FOREIGN KEY (`idUsers`) REFERENCES Users(`idUsers`)
+    UPDATE ON CASCADE
+    DELETE ON CASCADE,
+  FOREIGN KEY (`idChallenge`) REFERENCES challenge_CTF(`idChallenge`)
+    UPDATE ON CASCADE
+    DELETE ON CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
