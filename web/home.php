@@ -22,7 +22,13 @@
 <body>
     <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
     <p>Aquesta és la pàgina d'inici.</p>
-    
+    <div id="mainContain">
+        <div id="botonUser">
+            <div class="botonesInicio"><button>Home</button></div>
+            <div class="botonesInicio"><button>Inicio</button></div>
+            <div class="botonesInicio"><button>Usuarios</button></div>
+        </div>
+    </div>
     <a href="logout.php">Tanca sessió</a>
 </body>
 </html>
