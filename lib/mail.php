@@ -19,7 +19,7 @@
 
         //Dades del correu electrònic
         $mail->SetFrom('xavier.garciam@educem.net','Xavier García');
-        $mail->AddEmbeddedImage("../img/logo.jpg", "my-attach", "../img/logo.jpg");
+        $mail->AddEmbeddedImage("../img/banner.jpg", "my-attach", "../img/banner.jpg");
         $mail->addCC($userMail);
         $mail->Subject = $title;
         $mail->MsgHTML($textBody);
@@ -41,7 +41,7 @@
     function mailActivate($codeUser, $mailUser){
         $html = '';
         
-        $html .= "<img src='cid:my-attach' style='height=16px; width=16;'>";
+        $html .= "<img src='cid:my-attach' style='width:100%;'>";
         $html .= "<h2>Benvolguts a Eduhacks</h2>";
         $html .= "<p>Per poder iniciar sessió, has de verificar amb el següent enllaç</p>";
         $html .= "<a href='http://localhost/proyecto/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>"; // Si no funciona, concatena
