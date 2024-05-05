@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-image: url('../img/backGround\ \(2\).jpg');
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -9,11 +15,6 @@ body {
     text-align: center;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
 
 h2 {
     padding: 1em;
@@ -28,11 +29,32 @@ p {
     margin-bottom: 1.8em;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
+#mainContain {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-a:hover {
-    text-decoration: underline;
+#botonUser {
+    padding: 0.5em;
+    width: 10%;
+    font-size: 1.5em;
+    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2em;
+}
+
+#botonUser > a > i {
+    color: #007bff;
+}
+
+#botonUser > a > i:hover {
+    transform: scale(1.3,1.3);
+    transition: 1s;
 }

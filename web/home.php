@@ -16,17 +16,22 @@
 <html>
 <head>
     <title>Benvingut a EduHacks</title>
+    <script src="https://kit.fontawesome.com/c7573246bc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/home.css">
-
 </head>
 <body>
-    <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
-    <p>Aquesta és la pàgina d'inici.</p>
     <div id="mainContain">
+        <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
+        <p>Aquesta és la pàgina d'inici.</p>
         <div id="botonUser">
-            <div class="botonesInicio"><button>Home</button></div>
-            <div class="botonesInicio"><button>Inicio</button></div>
-            <div class="botonesInicio"><button>Usuarios</button></div>
+            <a href="#"><i class="fa-solid fa-house"></i></a>
+            <a href="#"><i class="fa-solid fa-play"></i></a>
+            <a href="#"><i class="fa-solid fa-user"></i></i></a>
+        </div>
+    </div>
+    <div id="retosctf">
+        <div class="cajactf">
+            
         </div>
     </div>
     <a href="logout.php">Tanca sessió</a>
