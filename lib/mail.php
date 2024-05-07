@@ -44,7 +44,7 @@
         $html .= "<img src='cid:my-attach' style='width:100%;'>";
         $html .= "<h2>Benvolguts a Eduhacks</h2>";
         $html .= "<p>Per poder iniciar sessió, has de verificar amb el següent enllaç</p>";
-        $html .= "<a href='http://localhost/proyecto/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>"; // Si no funciona, concatena
+        $html .= "<a href='http://localhost/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>"; // Si no funciona, concatena
 
         return $html;
     }
