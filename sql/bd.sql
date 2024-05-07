@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `users`(
     PRIMARY KEY(`idUsers`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 DROP TABLE IF EXISTS `challenge_CTF`;
 CREATE TABLE IF NOT EXISTS `challenge_CTF`(
   `idChallenge` INT AUTO_INCREMENT NOT NULL,

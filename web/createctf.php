@@ -22,8 +22,10 @@
         if (isset($form['title']) and isset($form['descripcion']) and isset($form['answer']) and isset($form['category']) and isset($form['score'])) {
             $dataUser=$_SESSION['user'];
             $form['score'] = (int)$form['score'];
-            $form['idUsers'] = $dataUser['idUser'];
+            $form['idUsers'] = $dataUser['idUsers'];
             createCTF($form);
+            header("Location: ./home.php");
+            exit(0);
         } else {
             $error="<p class='error'>No has introducido todos los campos obligatorios</p>";
         }

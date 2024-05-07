@@ -31,11 +31,27 @@
                     if (isset($challenges)) {
                         foreach ($challenges as $challenge) {
                             echo "----------------";
-                            echo $challenge;
+                            echo $challenge['idChallenge'];
+                            echo $challenge['title'];
+                            echo $challenge['description'];
+                            echo $challenge['score'];
+                            echo $challenge['flagValue'];
+                            echo $challenge['publicationDate'];
+                            echo $challenge['file'];
+                            echo $challenge['category'];
+                            echo $challenge['idUsers'];
                             echo "----------------";
+                            // `idChallenge` INT AUTO_INCREMENT NOT NULL,
+                            // `title` VARCHAR(32) NOT NULL,
+                            // `description` VARCHAR(128) NOT NULL,
+                            // `score` INT NOT NULL,
+                            // `flagValue` VARCHAR(265) NOT NULL,
+                            // `publicationDate` DATE NOT NULL,
+                            // `file` VARCHAR(265),
+                            // `category` ENUM('Steganography','Cryptography','Web Security') NOT NULL,
+                            // `idUsers` INT NOT NULL,
                         }
                     }
-
                 ?>
             </div>
         </div>
