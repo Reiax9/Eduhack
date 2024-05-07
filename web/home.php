@@ -25,7 +25,7 @@
         <p>Aquesta és la pàgina d'inici.</p>
         <div id="botonUser">
             <a href="#"><i class="fa-solid fa-house"></i></a>
-            <a href="#"><i class="fa-solid fa-play"></i></a>
+            <a href="./createctf.php"><i class="fa-solid fa-play"></i></a>
             <a href="#"><i class="fa-solid fa-user"></i></i></a>
         </div>
     </div>

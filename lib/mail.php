@@ -53,7 +53,6 @@
         $html = '';
 
         $html .= "<img src='cid:my-attach'>";
-        // $html .= "<img style='display:block;margin-left: auto; margin-right: auto;' src='http://localhost/proyecto/Eduhack/img/logo.jpg' alt='Logo Eduhacks'>";
         $html .= "<h2>Reset Password</h2>";
         $html .= "<p>Per poder resetejar la contrasenya, has de verificar amb el següent enllaç</p>";
         $html .= "<a href='http://localhost/proyecto/Eduhack/resetPassword.php?code=$codeUser&mail=$mailUser'>Reset Password</a>"; // Si no funciona, concatena
