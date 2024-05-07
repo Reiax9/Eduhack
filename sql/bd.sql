@@ -4,7 +4,7 @@ USE `eduhacks`;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users`(
-    `idUser` INT AUTO_INCREMENT NOT NULL,
+    `idUsers` INT AUTO_INCREMENT NOT NULL,
     `mail` VARCHAR(40) UNIQUE NOT NULL,
     `username` VARCHAR(16) UNIQUE NOT NULL,
     `passHash` VARCHAR(60) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `users`(
     `removeDate` DATETIME NULL,
     `lastSignIn` DATETIME NULL,
     `active` TINYINT(1) NOT NULL,
-    PRIMARY KEY(`idUser`)
+    PRIMARY KEY(`idUsers`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `challenge_CTF`;
@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `challenge_CTF`(
   `category` ENUM('Steganography','Cryptography','Web Security') NOT NULL,
   `idUsers` INT NOT NULL,
   PRIMARY KEY (`idChallenge`),
-  FOREIGN KEY (`idUsers`) REFERENCES Users(`idUsers`)
-    UPDATE ON CASCADE
-    DELETE ON CASCADE
+  FOREIGN KEY (`idUsers`) REFERENCES users(`idUsers`)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_challenge`;
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `users_challenge`(
   `idUsers` INT NOT NULL,
   `idChallenge` INT NOT NULL,
   PRIMARY KEY (`idUsers`, `idChallenge`),
-  FOREIGN KEY (`idUsers`) REFERENCES Users(`idUsers`)
-    UPDATE ON CASCADE
-    DELETE ON CASCADE,
+  FOREIGN KEY (`idUsers`) REFERENCES users(`idUsers`)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
   FOREIGN KEY (`idChallenge`) REFERENCES challenge_CTF(`idChallenge`)
-    UPDATE ON CASCADE
-    DELETE ON CASCADE
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

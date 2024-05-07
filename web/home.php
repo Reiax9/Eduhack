@@ -1,6 +1,7 @@
 <?php
 
     require_once "../lib/users.php";
+    require_once "../lib/ctf.php";
 
     session_start();
 
@@ -23,17 +24,27 @@
     <div id="mainContain">
         <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
         <p>Aquesta és la pàgina d'inici.</p>
+        <div id="retosctf">
+            <div class="cajactf">
+                <?php
+                    $challenges = showCTF();
+                    if (isset($challenges)) {
+                        foreach ($challenges as $challenge) {
+                            echo "----------------";
+                            echo $challenge;
+                            echo "----------------";
+                        }
+                    }
+
+                ?>
+            </div>
+        </div>
         <div id="botonUser">
             <a href="#"><i class="fa-solid fa-house"></i></a>
-            <a href="./createctf.php"><i class="fa-solid fa-play"></i></a>
+            <a href="./createctf.php"><i class="fa-solid fa-circle-plus"></i></a>
             <a href="#"><i class="fa-solid fa-user"></i></i></a>
         </div>
+        <a href="logout.php">Tanca sessió</a>
     </div>
-    <div id="retosctf">
-        <div class="cajactf">
-            
-        </div>
-    </div>
-    <a href="logout.php">Tanca sessió</a>
 </body>
 </html>
