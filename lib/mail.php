@@ -42,9 +42,9 @@
         $html = '';
         
         $html .= "<img src='cid:my-attach' style='width:100%;'>";
-        $html .= "<h2>Benvolguts a Eduhacks</h2>";
+        $html .= "<h1>Benvolguts a Eduhacks</h1>";
         $html .= "<p>Per poder iniciar sessió, has de verificar amb el següent enllaç</p>";
-        $html .= "<a href='http://localhost/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>"; // Si no funciona, concatena
+        $html .= "<a href='http://localhost/Eduhack/lib/mailCheckAccount.php?code=$codeUser&mail=$mailUser'>Active your account Now!</a>";
 
         return $html;
     }
@@ -52,10 +52,10 @@
     function resetPassword($codeUser, $mailUser){
         $html = '';
 
-        $html .= "<img src='cid:my-attach'>";
+        $html .= "<img src='cid:my-attach' style='width:100%;'>";
         $html .= "<h2>Reset Password</h2>";
         $html .= "<p>Per poder resetejar la contrasenya, has de verificar amb el següent enllaç</p>";
-        $html .= "<a href='http://localhost/proyecto/Eduhack/resetPassword.php?code=$codeUser&mail=$mailUser'>Reset Password</a>"; // Si no funciona, concatena
+        $html .= "<a href='http://localhost/proyecto/Eduhack/resetPassword.php?code=$codeUser&mail=$mailUser'>Reset Password</a>";
 
         return $html;
     }

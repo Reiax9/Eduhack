@@ -17,6 +17,7 @@
 <html>
 <head>
     <title>Benvingut a EduHacks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c7573246bc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/home.css">
 </head>
@@ -25,35 +26,29 @@
         <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
         <p>Aquesta és la pàgina d'inici.</p>
         <div id="retosctf">
-            <div class="cajactf">
-                <?php
-                    $challenges = showCTF();
-                    if (isset($challenges)) {
-                        foreach ($challenges as $challenge) {
-                            echo "----------------";
-                            echo $challenge['idChallenge'];
-                            echo $challenge['title'];
-                            echo $challenge['description'];
-                            echo $challenge['score'];
-                            echo $challenge['flagValue'];
-                            echo $challenge['publicationDate'];
-                            echo $challenge['file'];
-                            echo $challenge['category'];
-                            echo $challenge['idUsers'];
-                            echo "----------------";
-                            // `idChallenge` INT AUTO_INCREMENT NOT NULL,
-                            // `title` VARCHAR(32) NOT NULL,
-                            // `description` VARCHAR(128) NOT NULL,
-                            // `score` INT NOT NULL,
-                            // `flagValue` VARCHAR(265) NOT NULL,
-                            // `publicationDate` DATE NOT NULL,
-                            // `file` VARCHAR(265),
-                            // `category` ENUM('Steganography','Cryptography','Web Security') NOT NULL,
-                            // `idUsers` INT NOT NULL,
-                        }
+            <?php
+                $html = '';
+                $challenges = showCTF();
+                if (isset($challenges)) {
+                    foreach ($challenges as $challenge) {
+                        $html .= "<div class='boxCTF'>";
+                        $html .=    "<div class='bannerCTF'>";
+                        $html .=        "<h2>".$challenge['title']."</h2>";
+                        $html .=        "<p class='puntuacion'>+".$challenge['score']." pts</p>";
+                        $html .=    "</div>";
+                        $html .=    "<p>#".$challenge['category']."</p>";
+                        $html .=    "<p>Descripcion</p>";
+                        $html .=    "<p>".$challenge['description']."</p>";
+                        $html .=    "<p>".$challenge['publicationDate']."</p>";
+                        $html .= '<a href="../files/' . $challenge['file'] . '" download="' . $challenge['file'] . '">algo</a>';
+                        $html .=    "<div class='buttonFlag'>";
+                        $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
+                        $html .=    "</div>";
+                        $html .= "</div>";
                     }
-                ?>
-            </div>
+                    echo $html;
+                }
+            ?>
         </div>
         <div id="botonUser">
             <a href="#"><i class="fa-solid fa-house"></i></a>

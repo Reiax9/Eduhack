@@ -8,6 +8,7 @@
     // }
     session_start();
 
+    $rutaDestino = "../files/";
     $error = '';
 
     if ($_SERVER['REQUEST_METHOD']=='POST') {
@@ -23,6 +24,7 @@
             $dataUser=$_SESSION['user'];
             $form['score'] = (int)$form['score'];
             $form['idUsers'] = $dataUser['idUsers'];
+            move_uploaded_file($rutaDestino, $form['file']);
             createCTF($form);
             header("Location: ./home.php");
             exit(0);

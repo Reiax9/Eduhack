@@ -2,43 +2,72 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     background-image: url('../img/backGround\ \(2\).jpg');
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-size: cover; /* Cubrir todo el área */
-    background-position: center; /* Centrar la imagen */
-    color: #333;
-    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: aliceblue;
 }
 
 
 h2 {
-    padding: 1em;
     color: #007bff;
-    font-size: 28px;
-    margin-bottom: 10px;
 }
 
 p {
     font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 1.8em;
 }
 
 #mainContain {
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.bannerCTF {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.puntuacion {
+    font-size: 1.5em;
+    color: blueviolet;
+}
+
+.boxCTF {
+    padding: 1em;
+    margin: 2em 0;
+    width: 25em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
+    background-color: rgb(192, 178, 255);
+    border-radius: 1.5em;
+}
+
+.buttonFlag {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.buttonFlag > button {
+    width: 80%;
+}
+
+
 #botonUser {
     padding: 0.5em;
-    width: 10%;
+    width: 8em;
     font-size: 1.5em;
     
     display: flex;
