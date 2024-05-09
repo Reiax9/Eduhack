@@ -28,7 +28,7 @@
                                   :creationDate, NULL, :activationCode, NULL,
                                   NULL, NULL,  NULL, 0)";
 
-        $currentDate = date("Y-m-y H:i:s"); // ! Formato año-mes-dia
+        $currentDate = date("Y-m-d H:i:s"); // ! Formato año-mes-dia
         $passHash = password_hash($pass,PASSWORD_DEFAULT);
         $activationCode = hash('sha256', rand());
 
@@ -57,7 +57,7 @@
                 SET active = 1, activationCode = NULL, activationDate = :currentDate
                 WHERE `mail` = :mail"; 
 
-        $currentDate = date("Y-m-y H:i:s");
+        $currentDate = date("Y-m-d H:i:s");
 
         try {
             $conn = null;
@@ -107,7 +107,7 @@
 
     function updateTime($user){
         $sql = "UPDATE users SET lastSignIn = :lastTime WHERE `mail` = :user OR `username` = :user";
-        $dataTime = date("Y-m-y H:i:s");
+        $dataTime = date("Y-m-d H:i:s");
 
         try {
             $conn = null;

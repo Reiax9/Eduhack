@@ -5,13 +5,59 @@
 
     session_start();
 
-    if (!isset($_SESSION['user'])) {
-        header("Location: ../index.php");
-        exit(0);
-    }
+    // if (!isset($_SESSION['user'])) {
+    //     header("Location: ../index.php");
+    //     exit(0);
+    // }
 
     $dataUser = $_SESSION['user'];
     updateTime($dataUser['username']);
+
+    $html = '';
+    $chooseCTF = false;
+    $idChallenge = 0;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['category'])) {
+
+            setcookie('category', $_POST['category'], time() + 3600 * 24 * 7);
+            $category = $_POST['category'];
+
+        }elseif (isset($_POST['answerUser'])) {
+
+            if ($_POST['answerUser'] !== "") { 
+                $answerUser  = htmlspecialchars($_POST['answerUser']); 
+                $chooseCTF   = true;
+                $idChallenge = intval($_COOKIE['idChallenge']); 
+            }
+            $category = $_COOKIE['category'];
+
+        }elseif (isset($_POST['idChallenge'])) {
+
+            if ($_POST['idChallenge'] !== "") { 
+                setcookie('idChallenge', $_POST['idChallenge'], time() + 3600 * 24 * 7);
+                $idChallenge  = intval(htmlspecialchars($_POST['idChallenge'])); 
+                $chooseCTF    = true;
+            }
+            $category = $_COOKIE['category'];
+        } 
+    }elseif (!isset($_COOKIE['category'])) {
+        $category = 'All';
+    }
+    
+
+    
+    $challenges = getCTF();
+    if (isset($challenges) and $chooseCTF === false) {
+        foreach ($challenges as $challenge) {
+            $html = showCTF($html, $challenge, $category);
+        }
+    }elseif (isset($challenges) and isset($idChallenge)) {
+        foreach ($challenges as $challenge) {
+            if ($challenge['idChallenge'] === $idChallenge) {
+                $html = boxCTF($html, $challenge);
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,30 +71,26 @@
     <div id="mainContain">
         <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
         <p>Aquesta és la pàgina d'inici.</p>
+        <form method="post">
+            <div class="form-floating">
+                <select class="form-select" name="category" id="categoria">
+                <option value="All" <?php echo ($category==='All') ? "selected" : ""; ?>>All</option>
+                <option value="Steganography" <?php echo ($category==='Steganography') ? "selected" : ""; ?>>Steganography</option>
+                <option value="Cryptography" <?php echo ($category==='Cryptography') ? "selected" : ""; ?>>Cryptography</option>
+                <option value="Web Security" <?php echo ($category==='Web Security') ? "selected" : ""; ?>>Web Security</option>
+                </select>
+                <label for="floatingSelect">Escoge categoria</label>
+            </div>
+            <button class="btn btn-primary">Change category</button>
+        </form>
         <div id="retosctf">
-            <?php
-                $html = '';
-                $challenges = showCTF();
-                if (isset($challenges)) {
-                    foreach ($challenges as $challenge) {
-                        $html .= "<div class='boxCTF'>";
-                        $html .=    "<div class='bannerCTF'>";
-                        $html .=        "<h2>".$challenge['title']."</h2>";
-                        $html .=        "<p class='puntuacion'>+".$challenge['score']." pts</p>";
-                        $html .=    "</div>";
-                        $html .=    "<p>#".$challenge['category']."</p>";
-                        $html .=    "<p>Descripcion</p>";
-                        $html .=    "<p>".$challenge['description']."</p>";
-                        $html .=    "<p>".$challenge['publicationDate']."</p>";
-                        $html .= '<a href="../files/' . $challenge['file'] . '" download="' . $challenge['file'] . '">algo</a>';
-                        $html .=    "<div class='buttonFlag'>";
-                        $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
-                        $html .=    "</div>";
-                        $html .= "</div>";
-                    }
-                    echo $html;
+            <?php 
+                echo $html;
+                if (isset($answerUser)) {
+                    echo $answerUser;
                 }
             ?>
+
         </div>
         <div id="botonUser">
             <a href="#"><i class="fa-solid fa-house"></i></a>

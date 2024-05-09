@@ -8,23 +8,31 @@
     // }
     session_start();
 
-    $rutaDestino = "../files/";
     $error = '';
-
+    
     if ($_SERVER['REQUEST_METHOD']=='POST') {
         $form = array();
         $form['title']        = isset($_POST['title'])           ? htmlspecialchars($_POST['title']) : null;
         $form['descripcion']  = isset($_POST['descripcion'])     ? htmlspecialchars($_POST['descripcion']) : null;
         $form['answer']       = isset($_POST['answer'])          ? htmlspecialchars($_POST['answer']) : null;
         $form['category']     = isset($_POST['category'])        ? htmlspecialchars($_POST['category']) : null;
-        $form['file']         = isset($_POST['file'])            ? htmlspecialchars($_POST['file']) : null;
         $form['score']        = isset($_POST['score'])           ? htmlspecialchars($_POST['score']) : null;
+        
+        if (($form['title'] !== "") and ($form['descripcion'] !== "") and ($form['answer'] !== "") and ($form['category'] !== "Selecciona una categoria*") and ($form['score'] !== "")) {
+            //! Obtencion de los dato de la imagen
+            if (isset($_FILES['file'])) {
+                $rutaDestino  = "../files/";
+                $nameImg      = $_FILES['file']['name'];
+                $tempImg      = $_FILES['file']['tmp_name'];
+                $form['file'] = $nameImg;
+                move_uploaded_file($tempImg, $rutaDestino.$nameImg);
+            }
 
-        if (isset($form['title']) and isset($form['descripcion']) and isset($form['answer']) and isset($form['category']) and isset($form['score'])) {
+            //? Tratamiento de la información del usuario
             $dataUser=$_SESSION['user'];
             $form['score'] = (int)$form['score'];
             $form['idUsers'] = $dataUser['idUsers'];
-            move_uploaded_file($rutaDestino, $form['file']);
+
             createCTF($form);
             header("Location: ./home.php");
             exit(0);
@@ -49,7 +57,7 @@
             <div id="contain">
                 <h1>Crear tu CTF</h1>
                 <p>Crea tu siguiente ctf para que sea un Steganography, Cryptography o Web Security.</p>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <label class="inputForm" for="title">Titulo*
                         <input type="text" name="title">
                     </label>

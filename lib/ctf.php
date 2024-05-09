@@ -4,7 +4,7 @@
 
     function createCTF($form){
 
-        $currentDate = date("Y-m-y H:i:s");
+        $currentDate = date("Y-m-d H:i:s");
         $sql = "INSERT INTO `challenge_CTF`(`title`, `description`, `score`, `flagValue`, `publicationDate`, `file`, `category`, `idUsers`)
                                     Values( :title, :descriptions, :score, :flagValue, :publicationDate, :files, :category, :idUsers)";
         
@@ -28,7 +28,7 @@
         }
     }
 
-    function showCTF(){
+    function getCTF(){
         $sql = "SELECT * FROM challenge_CTF";
 
         try {
@@ -43,5 +43,47 @@
         }
     }
 
+    function showCTF($html, $challenge, $category){
+        if (($category === $challenge['category']) or ($category === "All")) {
+            $html .=    "<div class='buttonFlag'>";
+            $html .=    "<form action='../web/home.php' method='post'>";
+            $html .=    "<input type='hidden' name='idChallenge' value='".$challenge['idChallenge']."'>";;
+            $html .=        "<button>";
+            $html .=            "<div class='bannerCTF'>";
+            $html .=                "<h2>".$challenge['title']."</h2>";
+            $html .=                "<p class='puntuacion'>+".$challenge['score']." pts</p>";
+            $html .=            "</div>";
+            $html .=            "<p>#".$challenge['category']."</p>";
+            $html .=            "<p>Descripcion</p>";
+            $html .=            "<p>".$challenge['description']."</p>";
+            $html .=        "</button>";
+            $html .=    "</form>";
+            $html .=    "</div>";
+        }
+        return $html;
+    }
 
+    function boxCTF($html, $challenge){
+        $html .= "<div class='boxCTF'>";
+        $html .=    "<form action='../web/home.php' method='post'>";
+        $html .=    "<div class='bannerCTF'>";
+        $html .=        "<h2>".$challenge['title']."</h2>";
+        $html .=        "<p class='puntuacion'>+".$challenge['score']." pts</p>";
+        $html .=    "</div>";
+        $html .=    "<p>#".$challenge['category']."</p>";
+        $html .=    "<p>Descripcion</p>";
+        $html .=    "<p>".$challenge['description']."</p>";
+        $html .=    "<p>".$challenge['publicationDate']."</p>";
+        if ($challenge['file'] !== "") {
+            $html .=    "<p>Additional Resource</p>";
+            $html .=    '<a href="../files/' . $challenge['file'] . '" download="' . $challenge['file'] . '">'.$challenge['file'].'  <i class="fa-solid fa-download"></i></a>';
+        }
+        $html .=    "<input class='answerUser' type='text' name='answerUser'>";
+        $html .=    "<div class='buttonFlag'>";
+        $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
+        $html .=    "</div>";
+        $html .= "</div>"; 
+        return $html;
+    }
 ?>
+
