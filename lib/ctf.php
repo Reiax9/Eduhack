@@ -82,7 +82,7 @@
         $html .=    "<div class='buttonFlag'>";
         $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
         $html .=    "</div>";
-        $html .= "</div>"; 
+        $html .= "</div>";
         return $html;
     }
 ?>

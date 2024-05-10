@@ -1,8 +1,8 @@
 <?php
     session_start();
-    session_unset();
     session_destroy();
-    setcookie('loginSuccess', '', time() - 3600, '/');
+    unset($_COOKIE['loginSuccess']);
+    setcookie('loginSuccess', '', time() - 3600, '/Eduhack');
     header("Location: ../index.php");
     exit(0);
 ?>
