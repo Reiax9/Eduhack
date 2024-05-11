@@ -43,6 +43,47 @@
         }
     }
 
+    function addScore($username, $scoreCTF) {
+        $sql = "UPDATE users SET userScore = :scoreCTF WHERE username = :username";
+
+        try {
+            $conn = null;
+            $conn = getDBconnection();
+            
+            $db = $conn->prepare($sql);
+            $db->execute([ ':scoreCTF' => $scoreCTF, ':username' => $username ]);
+        } catch (PDOStatement $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function getScore() {
+        $sql = "SELECT username, userScore 
+                FROM users
+                ORDER BY userScore DESC
+                LIMIT 5";
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->query($sql);
+            return $db->fetchAll();
+
+        } catch (PDOStatement $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function boxScore($i,$score,$html){
+        $html .= "<div>";
+        $html .= "<p>$i</p>";
+        $html .= "<p>".$score['username']."</p>";
+        $html .= "<p>".$score['userScore']."</p>";
+        $html .= "</div>";
+        return $html;
+    }
+
     function showCTF($html, $challenge, $category){
         if (($category === $challenge['category']) or ($category === "All")) {
             $html .=    "<div class='buttonFlag'>";

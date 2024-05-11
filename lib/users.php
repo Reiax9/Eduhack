@@ -21,10 +21,10 @@
     }
 
     function registerUser($email, $name, $firstName, $lastName, $pass){
-        $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userFirstName`, `userLastName`, 
+        $insertSql = "INSERT INTO `users` (`mail`, `username`, `passHash`, `userScore`, `userFirstName`, `userLastName`, 
                                   `creationDate`, `activationDate`,`activationCode`,`resetPassExpiry`,
                                   `resetPassCode`, `removeDate`, `lastSignIn`, `active`)
-                        VALUES (  :email, :username, :pass, :firstName, :lastName, 
+                        VALUES (  :email, :username, :pass, 0, :firstName, :lastName, 
                                   :creationDate, NULL, :activationCode, NULL,
                                   NULL, NULL,  NULL, 0)";
 

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `users`(
     `mail` VARCHAR(40) UNIQUE NOT NULL,
     `username` VARCHAR(16) UNIQUE NOT NULL,
     `passHash` VARCHAR(60) NOT NULL,
+    `userScore` INT NOT NULL,
     `userFirstName` VARCHAR(60) NOT NULL,
     `userLastName` VARCHAR(120) NOT NULL,
     `creationDate` DATETIME NULL,
