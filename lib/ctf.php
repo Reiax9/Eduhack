@@ -77,9 +77,17 @@
 
     function boxScore($i, $userName, $score, $html){
         $html .= "<div class='rowScore'>";
-        $html .= "<p>$i</p>";
-        $html .= "<p>".$userName."</p>";
-        $html .= "<p>".$score."</p>";
+        if ($i===1) {
+            $html .= "<p><i class='fa-solid fa-crown' id='goldCrown'></i>  ".$userName."</p>";
+        }elseif ($i===2) {
+            $html .= "<p><i class='fa-solid fa-crown' id='silverCrown'></i>  ".$userName."</p>";
+        }elseif ($i===3) {
+            $html .= "<p><i class='fa-solid fa-crown' id='copperCrown'></i>  ".$userName."</p>";
+        }else {
+            $html .= "<p>$i".". ".$userName."</p>";
+        }
+        // $html .= "<p>".$userName."</p>";
+        $html .= "<p class='numberScore'>".$score."</p>";
         $html .= "</div>";
         return $html;
     }
@@ -113,7 +121,7 @@
         $html .=    "<p>#".$challenge['category']."</p>";
         $html .=    "<p>Descripcion</p>";
         $html .=    "<p>".$challenge['description']."</p>";
-        $html .=    "<p>".$challenge['publicationDate']."</p>";
+        $html .=    "<p class='fechBox'>".$challenge['publicationDate']."</p>";
         if ($challenge['file'] !== "") {
             $html .=    "<p>Additional Resource</p>";
             $html .=    '<a href="../files/' . $challenge['file'] . '" download="' . $challenge['file'] . '">'.$challenge['file'].'  <i class="fa-solid fa-download"></i></a>';

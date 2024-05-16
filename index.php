@@ -42,6 +42,7 @@
 </head>
 <body>
     <main>
+        <canvas id="cnv"></canvas>
         <form method="post">
             <div id="logo">
                 <img  src="../Eduhack/img/logo.jpg" alt="logo">
@@ -57,5 +58,6 @@
             <?php if (isset($successRegister)) { echo "<p id='registerSuccess'>" . $successRegister . "</p>"; }?> 
         </form>
     </main>
+    <script src="./index.js"></script>
 </body>
 </html>

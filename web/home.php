@@ -11,9 +11,8 @@
     }
     
     
-    $allDataUser=$_SESSION['user'];
+    $allDataUser=getAllDataUsers($_SESSION['user']['username']);
     updateTime($allDataUser['username']);
-
 
 
     $html = '';
@@ -80,9 +79,9 @@
 <body>
     <header></header>
     <main>
+        <canvas id="cnv"></canvas>
         <div id="mainContain">
-            <h2>Benvingut, <?php echo $allDataUser['username'] ; ?>!</h2>
-            <p>Aquí tens els reptes per esbrinar i guanyar més punts que els altres!</p>
+            <h1><img class="logo" src="../img/logo.jpg" alt="Logo eduhacks">EDUHACKS</h1>
             <form method="post">
                 <div class="form-floating">
                     <select class="form-select" name="category" id="categoria">
@@ -96,7 +95,7 @@
                 <button class="btn btn-primary btn-category">Change category</button>
             </form>
             <div id="panelScore">
-                <h3>Point</h3>
+                <h3>Ranked</h3>
                 <?php
                     $panelScore = '';
                     $score = getScore();
@@ -111,7 +110,7 @@
             <div id="retosctf">
                 <?php 
                     if (isset($answerUser)) {
-                        if($answerUser === $challenges[$idChallenge]['flagValue']){ 
+                        if($answerUser === $challenges[$idChallenge-1]['flagValue']){ 
                             $html .= "<p>Correct!</p>";
                             $allScore = $allDataUser['userScore'] + $challenges[$idChallenge-1]['score'];
                             addScore($allDataUser['username'], $allScore);
@@ -131,5 +130,6 @@
         </div>
     </main>
     <footer></footer>
+    <script src="../index.js"></script>
 </body>
 </html>
