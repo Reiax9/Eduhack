@@ -13,18 +13,42 @@ body {
     color: aliceblue;
 }
 
-
-h2 {
-    color: #007bff;
-}
-
-p {
-    font-size: 18px;
-}
-
 #mainContain {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    /* height: 100vh; */
+}
+
+#mainContain > h2 {
+    font-size: 2.5em;
+    margin: 1em 0;
+
+}
+
+#mainContain > p {
+    width: 30em;
+}
+
+
+#panelScore {
+
+    margin: 2em;
+    padding: 1em;
+
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 1em;
+
+}
+
+.rowScore{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -56,17 +80,22 @@ p {
 }
 
 .buttonFlag {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    margin: 1em 0;
+    padding: 1em;
+    width: 50em;
+
+    border-radius: 1em;
+    border: aliceblue 1px solid;
+    background-color: cadetblue;
 }
 
-.buttonFlag > button {
-    width: 80%;
+.btn {
+    width: 100%;
 }
 
 
 #botonUser {
+    
     padding: 0.5em;
     width: 8em;
     font-size: 1.5em;
@@ -77,7 +106,7 @@ p {
     align-items: center;
     
     background: rgba(0, 0, 0, 0.1);
-    border-radius: 2em;
+    /* border-radius: 2em; */
 }
 
 #botonUser > a > i {
@@ -89,3 +118,57 @@ p {
     transition: 1s;
 }
 
+@media screen and (max-width: 600px) {
+
+    #mainContain > h2 {
+        font-size: 2.5em;
+        margin: 0.5em 0;
+
+    }
+
+    #mainContain > p {
+        width: 15em;
+    }
+
+    .form-floating{
+        width: 15em;
+    }
+
+    .btn-category {
+        width: 15em;
+    }
+
+    #panelScore {
+        margin: 1em 0 0 0 ;
+        width: 15em;
+    }
+
+    .rowScore{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .buttonFlag {
+        margin: 1em 0;
+        padding: 1em;
+        width: 20em;
+
+        border-radius: 1em;
+        border: aliceblue 1px solid;
+        background-color: cadetblue;
+    }
+
+    .bannerCTF > h2 {
+        font-weight: bold;
+    }
+
+    #botonUser {
+        width: 100%;
+    }
+
+    .boxCTF{
+        width: 20em;
+    }
+}

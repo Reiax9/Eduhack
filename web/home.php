@@ -5,14 +5,16 @@
 
     session_start();
 
-    if (!isset($_COOKIE['loginSuccess']) or !isset($_SESSION['user'])) {
+    if (!isset($_COOKIE['PHPSESSID'])) {
         header("Location: ./logout.php");
         exit(0);
     }
+    
+    
+    $allDataUser=$_SESSION['user'];
+    updateTime($allDataUser['username']);
 
 
-    $dataUser = $_SESSION['user'];
-    updateTime($dataUser['username']);
 
     $html = '';
     $category = 'All';
@@ -50,33 +52,37 @@
     
     $challenges = getCTF();
     if (isset($challenges) and $chooseCTF === false) {
+
         foreach ($challenges as $challenge) {
             $html = showCTF($html, $challenge, $category);
         }
+
     }elseif (isset($challenges) and isset($idChallenge)) {
+
         foreach ($challenges as $challenge) {
             if ($challenge['idChallenge'] === $idChallenge) {
-                
                 $html = boxCTF($html, $challenge);
-                $answerChallenge = $challenge['flagValue'];
             }
         }
+        
     }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c7573246bc.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../css/home.css"> -->
+    <link rel="stylesheet" href="../css/home.css">
     <title>Benvingut a EduHacks</title>
 </head>
 <body>
     <header></header>
     <main>
         <div id="mainContain">
-            <h2>Benvingut, <?php echo $dataUser['username'] ; ?>!</h2>
-            <p>Aquesta és la pàgina d'inici.</p>
+            <h2>Benvingut, <?php echo $allDataUser['username'] ; ?>!</h2>
+            <p>Aquí tens els reptes per esbrinar i guanyar més punts que els altres!</p>
             <form method="post">
                 <div class="form-floating">
                     <select class="form-select" name="category" id="categoria">
@@ -87,27 +93,28 @@
                     </select>
                     <label for="floatingSelect">Escoge categoria</label>
                 </div>
-                <button class="btn btn-primary">Change category</button>
+                <button class="btn btn-primary btn-category">Change category</button>
             </form>
             <div id="panelScore">
                 <h3>Point</h3>
                 <?php
                     $panelScore = '';
-                    $score = getScore();  //! Sanitizar las filas que da
+                    $score = getScore();
                     for ($i=0; $i <= 5; $i++) { 
-                        boxScore($i, $score, $panelScore);
+                        if (isset($score[$i])) {
+                            $panelScore=boxScore($i+1, $score[$i]['username'], $score[$i]['userScore'], $panelScore);
+                        }
                     }
                     echo $panelScore;
                 ?>
             </div>
-
             <div id="retosctf">
                 <?php 
                     if (isset($answerUser)) {
-                        if($answerUser === $answerChallenge){ 
+                        if($answerUser === $challenges[$idChallenge]['flagValue']){ 
                             $html .= "<p>Correct!</p>";
-                            $allScore = $dataUser['userScore'] + $challenge['score'];
-                            addScore($dataUser['username'], $allScore);
+                            $allScore = $allDataUser['userScore'] + $challenges[$idChallenge-1]['score'];
+                            addScore($allDataUser['username'], $allScore);
                         } else {
                             $html .= "<p>Incorrect!</p>";
                         }
