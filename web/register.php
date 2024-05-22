@@ -47,6 +47,7 @@
     <title>Registre - EduHacks</title>
 </head>
 <body>
+    <canvas id="cnv"></canvas>
     <div class="container">
         <form method="post">
             <div id="logo">
@@ -62,6 +63,7 @@
             <?= isset($error) ? "<p style='color:red;'>".$error."</p>": '';?>
         </form>
     </div>
+    <script src="../index.js"></script>
 </body>
 </html>
 

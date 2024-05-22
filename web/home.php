@@ -78,6 +78,13 @@
 </head>
 <body>
     <header></header>
+    <nav id="navBar">
+        <ul>
+            <li><a>Home</a></li>
+            <li><a href="./createctf.php">Add CTF</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <main>
         <canvas id="cnv"></canvas>
         <div id="mainContain">

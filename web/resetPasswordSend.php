@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="../css/resetPasswordSend.css">
 </head>
 <body>
+    <canvas id="cnv"></canvas>
     <div id="mainContent">
         <div id="panelReset">
             <form method="post">
@@ -31,9 +32,10 @@
                     <span>Correo:</span>
                     <input type="text" name="mail">
                 </div>
-                <button class="button" type="submit"><span>Send Reset Password Email</span></button>
+                <button class="button" type="submit"><span>Enviar</span></button>
             </form>
         </div>
     </div>
+    <script src="../index.js"></script>
 </body>
 </html>

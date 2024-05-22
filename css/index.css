@@ -95,7 +95,7 @@ input[type="password"] {
 /* Estilo para el botón de enviar */
 button {
     padding: 10px;
-    background-color: #000000;
+    background-color: blue;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -104,7 +104,7 @@ button {
 
 /* Estilo para el botón de enviar al pasar el cursor */
 button:hover {
-    background-color: #0056b3;
+    background-color: #00b327;
 }
 
 /* Estilo para el mensaje de error */
