@@ -43,6 +43,40 @@
         }
     }
 
+    function successCTF($idUser, $idChallenge) {
+        $sql = "INSERT INTO `user_challenge_status`(`idUsers`,`idChallenge`,`solved`)
+                VALUE(:idUser, :idChallenge, 1)";
+        
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':idUser' => $idUser, ':idChallenge' => $idChallenge]);
+
+        } catch (PDOStatement $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function resultCTF($idUser, $idChallenge) {
+        $sql = "SELECT solved FROM `user_challenge_status` 
+                WHERE `idUsers` = :idUser AND `idChallenge` = :idChallenge";
+        
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+
+            $db = $conn->prepare($sql);
+            $db->execute([':idUser' => $idUser, ':idChallenge' => $idChallenge]);
+
+            return $db->fetchColumn();
+
+        } catch (PDOStatement $e) {
+            echo $e->getMessage();
+        }
+    }
+
     function addScore($username, $scoreCTF) {
         $sql = "UPDATE users SET userScore = :scoreCTF WHERE username = :username";
 
@@ -86,11 +120,11 @@
         }else {
             $html .= "<p>$i".". ".$userName."</p>";
         }
-        // $html .= "<p>".$userName."</p>";
         $html .= "<p class='numberScore'>".$score."</p>";
         $html .= "</div>";
         return $html;
     }
+
 
     function showCTF($html, $challenge, $category){
         if (($category === $challenge['category']) or ($category === "All")) {
@@ -103,6 +137,7 @@
             $html .=                "<p class='puntuacion'>+".$challenge['score']." pts</p>";
             $html .=            "</div>";
             $html .=            "<p>#".$challenge['category']."</p>";
+            $html .=            "<p>Author: ".getUsername($challenge['idUsers'])."</p>";
             $html .=            "<p>Descripcion: ".$challenge['description']."</p>";
             $html .=        "</button>";
             $html .=    "</form>";
@@ -111,7 +146,7 @@
         return $html;
     }
 
-    function boxCTF($html, $challenge){
+    function boxCTF($html, $challenge){  //! Pasar un booleano para que muestre el input o el check de resuelto
         $html .= "<div class='boxCTF'>";
         $html .=    "<form action='../web/home.php' method='post'>";
         $html .=    "<div class='bannerCTF'>";
@@ -119,6 +154,7 @@
         $html .=        "<p class='puntuacion'>+".$challenge['score']." pts</p>";
         $html .=    "</div>";
         $html .=    "<p>#".$challenge['category']."</p>";
+        $html .=    "<p>".getUsername($challenge['idUsers'])."</p>";
         $html .=    "<p>Descripcion</p>";
         $html .=    "<p>".$challenge['description']."</p>";
         $html .=    "<p class='fechBox'>".$challenge['publicationDate']."</p>";

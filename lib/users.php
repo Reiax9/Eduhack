@@ -89,6 +89,21 @@
         }
     }
 
+    function getUsername($id){
+        $sql = "SELECT username FROM users WHERE `idUsers` = :id"; 
+
+        try {
+            $conn = null;
+            $conn = getDBConnection();
+            $db   = $conn->prepare($sql);
+            $db->execute([':id' => $id]);
+            return $db->fetchColumn();
+
+        } catch (PDOStatement $e) {
+            echo $e->getMessage();
+        }
+    }
+
     function getAllDataUsersDes($user){
         $sql = "SELECT * FROM users WHERE `mail` = :user OR `username` = :user"; 
 

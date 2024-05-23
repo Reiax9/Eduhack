@@ -52,3 +52,17 @@ CREATE TABLE IF NOT EXISTS `users_challenge`(
     ON UPDATE CASCADE
     ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `user_challenge_status`;
+CREATE TABLE IF NOT EXISTS `user_challenge_status` (
+  `idUsers` INT NOT NULL,
+  `idChallenge` INT NOT NULL,
+  `solved` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`idUsers`, `idChallenge`),
+  FOREIGN KEY (`idUsers`) REFERENCES `users`(`idUsers`)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (`idChallenge`) REFERENCES `challenge_CTF`(`idChallenge`)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

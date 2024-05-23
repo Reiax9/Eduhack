@@ -8,16 +8,17 @@
     if (!isset($_COOKIE['PHPSESSID'])) {
         header("Location: ./logout.php");
         exit(0);
+    }elseif (isset($_SESSION['user'])) {
+        $allDataUser=getAllDataUsers($_SESSION['user']['username']);
+    }else {
+        $allDataUser=getAllDataUsers($_COOKIE['loginSuccess']);
     }
-    
-    
-    $allDataUser=getAllDataUsers($_SESSION['user']['username']);
     updateTime($allDataUser['username']);
 
 
     $html = '';
     $category = 'All';
-    $chooseCTF = false;
+    $chooseCTF = false;-
     $idChallenge = 0;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -54,7 +55,9 @@
     if (isset($challenges) and $chooseCTF === false) {
 
         foreach ($challenges as $challenge) {
-            $html = showCTF($html, $challenge, $category);
+            if ($allDataUser['idUsers']!==$challenge['idUsers']) {
+                $html = showCTF($html, $challenge, $category, $allDataUser);
+            }
         }
 
     }elseif (isset($challenges) and isset($idChallenge)) {
@@ -123,12 +126,19 @@
                 <?php 
                     if (isset($answerUser)) {
                         if($answerUser === $challenges[$idChallenge-1]['flagValue']){ 
-                            $html .= "<p>Correct!</p>";
+                            //! Añado que el usuario ha completado correctamente la base de datos
+                            successCTF($allDataUser['idUsers'],$challenges[$idChallenge-1]);
+
+                            //? Obtengo la puntuación del usuario
                             $allScore = $allDataUser['userScore'] + $challenges[$idChallenge-1]['score'];
                             addScore($allDataUser['username'], $allScore);
-                        } else {
-                            $html .= "<p>Incorrect!</p>";
-                        }
+                        } 
+                    }
+
+                    //* Compruebo si el usuario ha completado correctamente el ctf
+                    $checkResultCTF = resultCTF($allDataUser['idUsers'],$challenges[$idChallenge-1]);
+                    if ($checkResultCTF===1) {
+                        
                     }
                     echo $html;
                 ?>

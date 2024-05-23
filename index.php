@@ -13,7 +13,7 @@
             if(validateUser($userName,$password)){
                 session_start();
                 $_SESSION['user'] = getAllDataUsers($userName);
-                setcookie("loginSuccess","Cookie de usuario " . $_SESSION['user']['username'],time() + 3600*24);
+                setcookie("loginSuccess",$_SESSION['user']['username'],time() + 3600*24);
                 header("Location: ./web/home.php");
                 exit(0);
             } 
