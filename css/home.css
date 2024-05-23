@@ -72,7 +72,6 @@ a {
 #showUser {
     position: absolute;
     right: 2em;
-    width: 5em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -82,6 +81,10 @@ a {
 
 #showUser > p {
     margin: 0;
+}
+
+#showUser > i{
+    margin-left: 1em;
 }
 
 #panelScore {
@@ -138,7 +141,7 @@ a {
 .puntuacion {
     font-size: 1.5em;
     font-weight: 600;
-    color: rgb(43, 255, 0);
+    color: #63E6BE;
 }
 
 .boxCTF {
@@ -183,6 +186,12 @@ a {
 
     display: flex;
     flex-flow: column wrap;
+    align-items: flex-start;
+}
+
+.btn-primary{
+    display: flex;
+    flex-flow: column wrap;
     align-items: center;
 }
 
@@ -203,6 +212,13 @@ a {
    display: none;
 }
 
+.fa-circle-check {
+    margin: 0.5em 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 
 @media screen and (max-width: 600px) {
@@ -251,7 +267,7 @@ a {
     .rowScore{
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
     }
 
@@ -299,4 +315,5 @@ a {
         margin-top: 2em;
         width: 20em;
     }
+
 }

@@ -7,6 +7,8 @@
         $currentDate = date("Y-m-d H:i:s");
         $sql = "INSERT INTO `challenge_CTF`(`title`, `description`, `score`, `flagValue`, `publicationDate`, `file`, `category`, `idUsers`)
                                     Values( :title, :descriptions, :score, :flagValue, :publicationDate, :files, :category, :idUsers)";
+
+        $validateCTF = "INSERT INTO `user_challenge_status`(`idUsers`,`idChallenge`,`solved`) VALUE(:idUser, :idChallenge, 1)";
         
         try {
             $conn = null;
@@ -23,6 +25,14 @@
                 ':category'         => $form['category'],
                 ':idUsers'          => $form['idUsers']
             ]);
+
+            //? Obtener la última ID recién creada
+            $lastId = $conn->lastInsertId();
+
+            //! Impido que el usuario pueda responder su propio CTF
+            $db2 = $conn->prepare($validateCTF);
+            $db2->execute([ ':idUser' => $form['idUsers'], ':idChallenge' => $lastId ]);
+
         } catch (PDOStatement $e) {
             echo $e->getMessage();
         }
@@ -44,8 +54,7 @@
     }
 
     function successCTF($idUser, $idChallenge) {
-        $sql = "INSERT INTO `user_challenge_status`(`idUsers`,`idChallenge`,`solved`)
-                VALUE(:idUser, :idChallenge, 1)";
+        $sql = "INSERT INTO `user_challenge_status`(`idUsers`,`idChallenge`,`solved`) VALUE(:idUser, :idChallenge, 1)";
         
         try {
             $conn = null;
@@ -126,7 +135,7 @@
     }
 
 
-    function showCTF($html, $challenge, $category){
+    function showCTF($html, $challenge, $category, $success){
         if (($category === $challenge['category']) or ($category === "All")) {
             $html .=    "<div class='buttonFlag'>";
             $html .=    "<form action='../web/home.php' method='post'>";
@@ -139,6 +148,10 @@
             $html .=            "<p>#".$challenge['category']."</p>";
             $html .=            "<p>Author: ".getUsername($challenge['idUsers'])."</p>";
             $html .=            "<p>Descripcion: ".$challenge['description']."</p>";
+            if ($success) { 
+                //! Revisar por si solo lo puede hacer una vez
+                $html .=            "<i class='fa-solid fa-circle-check fa-2xl' style='color: #63E6BE;'></i>";
+            }
             $html .=        "</button>";
             $html .=    "</form>";
             $html .=    "</div>";
@@ -146,7 +159,7 @@
         return $html;
     }
 
-    function boxCTF($html, $challenge){  //! Pasar un booleano para que muestre el input o el check de resuelto
+    function boxCTF($html, $challenge, $success){
         $html .= "<div class='boxCTF'>";
         $html .=    "<form action='../web/home.php' method='post'>";
         $html .=    "<div class='bannerCTF'>";
@@ -157,15 +170,20 @@
         $html .=    "<p>".getUsername($challenge['idUsers'])."</p>";
         $html .=    "<p>Descripcion</p>";
         $html .=    "<p>".$challenge['description']."</p>";
-        $html .=    "<p class='fechBox'>".$challenge['publicationDate']."</p>";
         if ($challenge['file'] !== "") {
             $html .=    "<p>Additional Resource</p>";
             $html .=    '<a href="../files/' . $challenge['file'] . '" download="' . $challenge['file'] . '">'.$challenge['file'].'  <i class="fa-solid fa-download"></i></a>';
         }
-        $html .=    "<input class='answerUser' type='text' name='answerUser'>";
-        $html .=    "<div class='buttonCTF'>";
-        $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
-        $html .=    "</div>";
+        $html .=    "<p class='fechBox'>".$challenge['publicationDate']."</p>";
+
+        if ($success) { 
+            $html .=            "<i class='fa-solid fa-circle-check fa-2xl' style='color: #63E6BE;'></i>";
+        }else{
+            $html .=    "<input class='answerUser' type='text' name='answerUser'>";
+            $html .=    "<div class='buttonCTF'>";
+            $html .=        "<button class='btn btn-primary'>Check Flag!</button>";
+            $html .=    "</div>";
+        }
         $html .= "</div>";
         return $html;
     }

@@ -19,7 +19,7 @@
         $form['score']        = isset($_POST['score'])           ? htmlspecialchars($_POST['score']) : null;
         
         if (($form['title'] !== "") and ($form['descripcion'] !== "") and ($form['answer'] !== "") and ($form['category'] !== "Selecciona una categoria*") and ($form['score'] !== "")) {
-            //! Obtencion de los dato de la imagen
+            //! Obtencion de los datos de la imagen
             if (isset($_FILES['file'])) {
                 $rutaDestino  = "../files/";
                 $nameImg      = $_FILES['file']['name'];

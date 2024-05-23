@@ -16,10 +16,22 @@
     updateTime($allDataUser['username']);
 
 
-    $html = '';
-    $category = 'All';
-    $chooseCTF = false;-
-    $idChallenge = 0;
+    $html        = '';
+    $answerUser  = '';
+    $category    = 'All';
+    $idChallenge = 1;
+    $chooseCTF   = false;
+    $successCTF  = false;
+    $showOwnCTF  = false;
+
+    if (isset($_GET['ctf'])) {
+        if ($_GET['ctf']==='own') {
+            $showOwnCTF = true;
+            $successCTF = true;
+        }elseif ($_GET['ctf']==='people') {
+            $showOwnCTF=false;
+        }
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['category'])) {
@@ -55,8 +67,12 @@
     if (isset($challenges) and $chooseCTF === false) {
 
         foreach ($challenges as $challenge) {
-            if ($allDataUser['idUsers']!==$challenge['idUsers']) {
-                $html = showCTF($html, $challenge, $category, $allDataUser);
+            $isMyChallenge = $allDataUser['idUsers'] === $challenge['idUsers'];
+
+            if  (($showOwnCTF && $isMyChallenge) || (!$showOwnCTF && !$isMyChallenge))  {
+                $checkResultCTF = resultCTF($allDataUser['idUsers'],$challenge['idChallenge']);
+                $successCTF = $checkResultCTF === 1 ? true : false;
+                $html = showCTF($html, $challenge, $category, $successCTF);
             }
         }
 
@@ -64,7 +80,11 @@
 
         foreach ($challenges as $challenge) {
             if ($challenge['idChallenge'] === $idChallenge) {
-                $html = boxCTF($html, $challenge);
+                //! Comprobar si el usuario completo el reto
+                $checkResultCTF = resultCTF($allDataUser['idUsers'],$challenges[$idChallenge-1]['idChallenge']);
+                $successCTF = $checkResultCTF === 1 ? true : false;
+                //? Mostrar panel para responder
+                $html = boxCTF($html, $challenge, $successCTF);
             }
         }
         
@@ -84,7 +104,8 @@
     <header></header>
     <nav id="navBar">
         <ul>
-            <li><a>Home</a></li>
+            <li><a href="./home.php?ctf=people">Home</a></li>
+            <li><a href="./home.php?ctf=own">Your CTFs</a></li>
             <li><a href="./createctf.php">Add CTF</a></li>
             <li><a href="./logout.php">Logout</a></li>
             <div id="showUser">
@@ -124,28 +145,23 @@
             </div>
             <div id="retosctf">
                 <?php 
-                    if (isset($answerUser)) {
-                        if($answerUser === $challenges[$idChallenge-1]['flagValue']){ 
-                            //! Añado que el usuario ha completado correctamente la base de datos
-                            successCTF($allDataUser['idUsers'],$challenges[$idChallenge-1]);
 
-                            //? Obtengo la puntuación del usuario
-                            $allScore = $allDataUser['userScore'] + $challenges[$idChallenge-1]['score'];
-                            addScore($allDataUser['username'], $allScore);
-                        } 
-                    }
+                    if($answerUser === $challenges[$idChallenge-1]['flagValue'] and isset($answerUser)){ 
+                        //! Añado que el usuario ha completado correctamente la base de datos
+                        successCTF($allDataUser['idUsers'],$idChallenge);
 
-                    //* Compruebo si el usuario ha completado correctamente el ctf
-                    $checkResultCTF = resultCTF($allDataUser['idUsers'],$challenges[$idChallenge-1]);
-                    if ($checkResultCTF===1) {
-                        
-                    }
+                        //? Obtengo la puntuación del usuario
+                        $allScore = $allDataUser['userScore'] + $challenges[$idChallenge-1]['score'];
+                        addScore($allDataUser['username'], $allScore);
+                    } 
+                    
                     echo $html;
                 ?>
     
             </div>
             <div id="botonUser">
-                <a href="#"><i class="fa-solid fa-house"></i></a>
+                <a href="./home.php?ctf=people"><i class="fa-solid fa-house"></i></a>
+                <a href="./home.php?ctf=own"><i class="fa-solid fa-book"></i></a>
                 <a href="./createctf.php"><i class="fa-solid fa-circle-plus"></i></a>
                 <a href="logout.php"><i class="fa-solid fa-user"></i></i></a>
             </div>
