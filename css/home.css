@@ -64,7 +64,24 @@ body {
 }
 
 a {
+    color: aliceblue;
     list-style: none !important;
+    text-decoration: none;
+}
+
+#showUser {
+    position: absolute;
+    right: 2em;
+    width: 5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #007bff;
+}
+
+#showUser > p {
+    margin: 0;
 }
 
 #panelScore {
@@ -210,7 +227,7 @@ a {
         width: 15em;
     }
 
-    #navBar > ul {
+    #navBar{
         display: none;
     }
 

@@ -53,6 +53,7 @@
 </head>
 <body>
     <main>
+        <canvas id="cnv"></canvas>
         <div id="mainContain">
             <div id="contain">
                 <h1>Crear tu CTF</h1>
@@ -87,5 +88,6 @@
             </div>
         </div>
     </main>
+    <script src="../index.js"></script>
 </body>
 </html>

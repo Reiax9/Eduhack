@@ -19,10 +19,10 @@
     $category = 'All';
     $chooseCTF = false;
     $idChallenge = 0;
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['category'])) {
-
-            setcookie('category', $_POST['category'], time() + 3600 * 24 * 7);
+            
             $category = $_POST['category'];
 
         }elseif (isset($_POST['answerUser'])) {
@@ -45,6 +45,7 @@
         } 
     }elseif (!isset($_COOKIE['category'])) {
         $category = 'All';
+        setcookie('category', $category, time() + 3600 * 24 * 7);
     }
     
 
@@ -82,7 +83,11 @@
         <ul>
             <li><a>Home</a></li>
             <li><a href="./createctf.php">Add CTF</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="./logout.php">Logout</a></li>
+            <div id="showUser">
+                <p><?=$allDataUser['username']?></p>
+                <i class="fa-solid fa-user"></i>
+            </div>
         </ul>
     </nav>
     <main>
