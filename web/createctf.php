@@ -52,6 +52,14 @@
     <title>Eduhacks</title>
 </head>
 <body>
+    <nav id="navBar">
+        <ul>
+            <li><a href="./home.php?ctf=people">Home</a></li>
+            <li><a href="./home.php?ctf=own">Your CTFs</a></li>
+            <li><a href="./createctf.php">Add CTF</a></li>
+            <li><a href="./logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <main>
         <canvas id="cnv"></canvas>
         <div id="mainContain">

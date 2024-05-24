@@ -140,14 +140,14 @@
             $html .=    "<div class='buttonFlag'>";
             $html .=    "<form action='../web/home.php' method='post'>";
             $html .=    "<input type='hidden' name='idChallenge' value='".$challenge['idChallenge']."'>";;
-            $html .=        "<button class='btn '>";
+            $html .=        "<button class='btn'>";
             $html .=            "<div class='bannerCTF'>";
             $html .=                "<h2>".$challenge['title']."</h2>";
             $html .=                "<p class='puntuacion'>+".$challenge['score']." pts</p>";
             $html .=            "</div>";
             $html .=            "<p>#".$challenge['category']."</p>";
             $html .=            "<p>Author: ".getUsername($challenge['idUsers'])."</p>";
-            $html .=            "<p>Descripcion: ".$challenge['description']."</p>";
+            $html .=            "<p class='descripcionBoton'>Descripcion: ".$challenge['description']."</p>";
             if ($success) { 
                 //! Revisar por si solo lo puede hacer una vez
                 $html .=            "<i class='fa-solid fa-circle-check fa-2xl' style='color: #63E6BE;'></i>";
